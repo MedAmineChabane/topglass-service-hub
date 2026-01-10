@@ -1,6 +1,13 @@
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
 import technicianHandover from "@/assets/technician-handover.png";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselPrevious,
+  CarouselNext,
+} from "@/components/ui/carousel";
 
 const testimonials = [
   {
@@ -46,6 +53,41 @@ const testimonials = [
     date: "Il y a 1 mois",
   },
 ];
+
+const TestimonialCard = ({ testimonial }: { testimonial: typeof testimonials[0] }) => (
+  <div className="bg-card rounded-2xl p-6 shadow-soft border border-border hover:shadow-medium transition-shadow h-full">
+    {/* Quote Icon */}
+    <Quote className="w-8 h-8 text-primary/20 mb-4" />
+    
+    {/* Rating */}
+    <div className="flex gap-1 mb-4">
+      {Array.from({ length: 5 }, (_, i) => (
+        <Star
+          key={i}
+          className={`w-5 h-5 ${
+            i < testimonial.rating
+              ? "text-yellow-400 fill-yellow-400"
+              : "text-muted"
+          }`}
+        />
+      ))}
+    </div>
+
+    {/* Text */}
+    <p className="text-foreground mb-6 leading-relaxed">
+      "{testimonial.text}"
+    </p>
+
+    {/* Author */}
+    <div className="flex items-center justify-between border-t border-border pt-4">
+      <div>
+        <p className="font-semibold text-foreground">{testimonial.name}</p>
+        <p className="text-sm text-muted-foreground">{testimonial.location}</p>
+      </div>
+      <span className="text-sm text-muted-foreground">{testimonial.date}</span>
+    </div>
+  </div>
+);
 
 const Testimonials = () => {
   return (
@@ -100,49 +142,33 @@ const Testimonials = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-card rounded-2xl p-6 shadow-soft border border-border hover:shadow-medium transition-shadow"
-            >
-              {/* Quote Icon */}
-              <Quote className="w-8 h-8 text-primary/20 mb-4" />
-              
-              {/* Rating */}
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: 5 }, (_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-5 h-5 ${
-                      i < testimonial.rating
-                        ? "text-yellow-400 fill-yellow-400"
-                        : "text-muted"
-                    }`}
-                  />
-                ))}
-              </div>
-
-              {/* Text */}
-              <p className="text-foreground mb-6 leading-relaxed">
-                "{testimonial.text}"
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center justify-between border-t border-border pt-4">
-                <div>
-                  <p className="font-semibold text-foreground">{testimonial.name}</p>
-                  <p className="text-sm text-muted-foreground">{testimonial.location}</p>
-                </div>
-                <span className="text-sm text-muted-foreground">{testimonial.date}</span>
-              </div>
-            </motion.div>
-          ))}
-        </div>
+        {/* Carousel */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4">
+              {testimonials.map((testimonial, index) => (
+                <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                  <TestimonialCard testimonial={testimonial} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center gap-4 mt-8">
+              <CarouselPrevious className="static translate-y-0 h-12 w-12 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 border-0" />
+              <CarouselNext className="static translate-y-0 h-12 w-12 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 border-0" />
+            </div>
+          </Carousel>
+        </motion.div>
       </div>
     </section>
   );
