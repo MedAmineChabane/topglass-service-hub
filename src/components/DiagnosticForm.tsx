@@ -456,7 +456,7 @@ const DiagnosticForm = () => {
                 <Button
                   onClick={nextStep}
                   disabled={!canProceed()}
-                  className="gradient-cta text-primary-foreground gap-2 shadow-cta"
+                  className={`gradient-cta text-primary-foreground gap-2 shadow-cta ${canProceed() ? 'animate-pulse-glow' : ''}`}
                 >
                   Suivant
                   <ArrowRight className="w-4 h-4" />

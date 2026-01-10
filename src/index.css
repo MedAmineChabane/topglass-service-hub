@@ -144,4 +144,32 @@
   .shadow-cta {
     box-shadow: var(--shadow-cta);
   }
+  
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 0 0 hsl(33 100% 50% / 0.4), var(--shadow-cta);
+      transform: scale(1);
+    }
+    50% {
+      box-shadow: 0 0 20px 8px hsl(33 100% 50% / 0.2), var(--shadow-cta);
+      transform: scale(1.02);
+    }
+  }
+  
+  .animate-phone-pulse {
+    animation: phone-pulse 2s ease-in-out infinite;
+  }
+  
+  @keyframes phone-pulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
 }

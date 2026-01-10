@@ -42,13 +42,16 @@ const Header = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
-            <div className="flex items-center gap-2 text-secondary">
+            <a 
+              href="tel:0123456789"
+              className="flex items-center gap-2 text-secondary animate-phone-pulse hover:text-primary transition-colors"
+            >
               <Phone className="w-4 h-4" />
               <span className="font-semibold">01 23 45 67 89</span>
-            </div>
+            </a>
             <Button 
               onClick={scrollToForm}
-              className="gradient-cta text-primary-foreground font-semibold shadow-cta hover:opacity-90 transition-opacity"
+              className="gradient-cta text-primary-foreground font-semibold shadow-cta hover:opacity-90 transition-opacity animate-pulse-glow"
             >
               Devis gratuit
             </Button>
@@ -96,13 +99,16 @@ const Header = () => {
               >
                 Contact
               </a>
-              <div className="flex items-center gap-2 text-secondary py-2">
+              <a 
+                href="tel:0123456789"
+                className="flex items-center gap-2 text-secondary py-2 animate-phone-pulse"
+              >
                 <Phone className="w-4 h-4" />
                 <span className="font-semibold">01 23 45 67 89</span>
-              </div>
+              </a>
               <Button 
                 onClick={scrollToForm}
-                className="gradient-cta text-primary-foreground font-semibold w-full"
+                className="gradient-cta text-primary-foreground font-semibold w-full animate-pulse-glow"
               >
                 Devis gratuit
               </Button>
