@@ -29,13 +29,13 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
-            <a href="#services" className="text-muted-foreground hover:text-foreground transition-colors font-medium">
+            <a href="#services" className="text-white hover:text-primary transition-colors font-bold">
               Services
             </a>
-            <a href="#temoignages" className="text-muted-foreground hover:text-foreground transition-colors font-medium">
+            <a href="#temoignages" className="text-white hover:text-primary transition-colors font-bold">
               Témoignages
             </a>
-            <a href="#contact" className="text-muted-foreground hover:text-foreground transition-colors font-medium">
+            <a href="#contact" className="text-white hover:text-primary transition-colors font-bold">
               Contact
             </a>
           </nav>
