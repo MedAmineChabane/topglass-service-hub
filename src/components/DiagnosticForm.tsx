@@ -155,7 +155,22 @@ const DiagnosticForm = () => {
     <section id="diagnostic-form" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Image */}
+          {/* Image - Mobile version (above form) */}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="lg:hidden mb-6"
+          >
+            <img
+              src={technicianRepair}
+              alt="Technicien Topglass réparant un pare-brise"
+              className="rounded-xl shadow-soft w-full max-h-48 object-cover"
+            />
+          </motion.div>
+
+          {/* Image - Desktop version (side by side) */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
