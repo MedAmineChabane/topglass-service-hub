@@ -36,11 +36,16 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 rounded-lg gradient-cta flex items-center justify-center">
-                <span className="text-primary-foreground font-display font-bold text-lg">TG</span>
-              </div>
-              <span className="font-display font-bold text-xl">Topglass</span>
+            <div className="flex items-center gap-3 mb-4">
+              <img 
+                src="/assets/topglass-logo.png" 
+                alt="Topglass" 
+                className="h-14 w-14 rounded-full object-cover border-2 border-white/30 shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+              />
+              <span className="font-display font-bold text-xl">
+                <span className="text-white">Top</span>
+                <span className="text-sky-500">glass</span>
+              </span>
             </div>
             <p className="text-background/70 mb-4">
               Leader du remplacement de pare-brise en France. Intervention rapide, service de qualité.
