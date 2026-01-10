@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
+import technicianHandover from "@/assets/technician-handover.png";
 
 const testimonials = [
   {
@@ -50,34 +51,53 @@ const Testimonials = () => {
   return (
     <section id="temoignages" className="py-20 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
+        {/* Header with illustration */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+          {/* Image */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4"
+            transition={{ duration: 0.6 }}
+            className="order-2 lg:order-1"
           >
-            <Star className="w-4 h-4 fill-current" />
-            <span className="text-sm font-medium">4.9/5 sur 2 847 avis</span>
+            <img
+              src={technicianHandover}
+              alt="Technicien Topglass remettant les clés à une cliente satisfaite"
+              className="rounded-2xl shadow-medium w-full object-cover"
+            />
           </motion.div>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.1 }}
-            className="font-display font-bold text-3xl md:text-4xl text-foreground mb-4"
-          >
-            Ce que disent nos clients
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-muted-foreground text-lg max-w-2xl mx-auto"
-          >
-            Des milliers de clients satisfaits partout en France
-          </motion.p>
+
+          {/* Text content */}
+          <div className="order-1 lg:order-2 text-center lg:text-left">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-4"
+            >
+              <Star className="w-4 h-4 fill-current" />
+              <span className="text-sm font-medium">4.9/5 sur 2 847 avis</span>
+            </motion.div>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="font-display font-bold text-3xl md:text-4xl text-foreground mb-4"
+            >
+              Ce que disent nos clients
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="text-muted-foreground text-lg max-w-2xl"
+            >
+              Des milliers de clients satisfaits partout en France. Nos techniciens certifiés vous accompagnent de A à Z pour une intervention sans stress.
+            </motion.p>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
