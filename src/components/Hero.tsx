@@ -48,7 +48,7 @@ const Hero = () => {
             className="font-display font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6 drop-shadow-lg"
           >
             <span className="text-white">Top</span>
-            <span className="text-primary">glass</span>
+            <span className="text-cyan-400">glass</span>
             <span className="text-gray-900"> : Remplacement Pare-Brise à{" "}</span>
             <span className="text-primary">Marseille</span>
             <span className="text-gray-900"> & Partout en France</span>
