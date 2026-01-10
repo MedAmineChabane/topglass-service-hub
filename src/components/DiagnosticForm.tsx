@@ -254,7 +254,7 @@ const DiagnosticForm = () => {
                     Quel est votre type de véhicule ?
                   </h3>
                   <div className="grid grid-cols-3 gap-4">
-                    {vehicleTypes.map((type) => (
+                    {vehicleTypes.map((type, index) => (
                       <button
                         key={type.id}
                         onClick={() => updateFormData("vehicleType", type.id)}
@@ -264,9 +264,19 @@ const DiagnosticForm = () => {
                             : "border-border hover:border-primary/50"
                         }`}
                       >
-                        <type.icon className={`w-8 h-8 ${
-                          formData.vehicleType === type.id ? "text-primary" : "text-muted-foreground"
-                        }`} />
+                        <motion.div
+                          animate={{ y: [0, -4, 0] }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: index * 0.2
+                          }}
+                        >
+                          <type.icon className={`w-8 h-8 ${
+                            formData.vehicleType === type.id ? "text-primary" : "text-muted-foreground"
+                          }`} />
+                        </motion.div>
                         <span className={`font-medium ${
                           formData.vehicleType === type.id ? "text-primary" : "text-foreground"
                         }`}>
@@ -292,7 +302,7 @@ const DiagnosticForm = () => {
                     Quelle vitre est endommagée ?
                   </h3>
                   <div className="grid grid-cols-2 gap-4">
-                    {glassTypes.map((type) => (
+                    {glassTypes.map((type, index) => (
                       <button
                         key={type.id}
                         onClick={() => updateFormData("glassType", type.id)}
@@ -302,9 +312,19 @@ const DiagnosticForm = () => {
                             : "border-border hover:border-primary/50"
                         }`}
                       >
-                        <type.icon className={`w-8 h-8 ${
-                          formData.glassType === type.id ? "text-primary" : "text-muted-foreground"
-                        }`} />
+                        <motion.div
+                          animate={{ y: [0, -4, 0] }}
+                          transition={{
+                            duration: 2,
+                            repeat: Infinity,
+                            ease: "easeInOut",
+                            delay: index * 0.15
+                          }}
+                        >
+                          <type.icon className={`w-8 h-8 ${
+                            formData.glassType === type.id ? "text-primary" : "text-muted-foreground"
+                          }`} />
+                        </motion.div>
                         <span className={`font-medium text-center ${
                           formData.glassType === type.id ? "text-primary" : "text-foreground"
                         }`}>
