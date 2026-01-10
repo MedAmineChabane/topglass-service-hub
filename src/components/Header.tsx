@@ -39,7 +39,7 @@ const Header = () => {
             <img 
               src="/assets/topglass-logo.png" 
               alt="Topglass - Remplacement pare-brise" 
-              className="h-20 md:h-24 w-auto transition-transform duration-300 hover:scale-105"
+              className="h-20 md:h-24 w-auto rounded-full transition-transform duration-300 hover:scale-105"
             />
           </a>
 
