@@ -23,7 +23,7 @@ const Header = () => {
             <img 
               src="/assets/topglass-logo.png" 
               alt="Topglass - Remplacement pare-brise" 
-              className="h-12 w-auto"
+              className="h-16 md:h-20 w-auto"
             />
           </a>
 
