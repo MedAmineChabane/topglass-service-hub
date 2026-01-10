@@ -24,8 +24,8 @@ const Hero = () => {
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{ backgroundImage: `url(${heroBackground})` }}
       />
-      {/* Overlay for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white/70 via-white/50 to-white/80" />
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
@@ -34,9 +34,9 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 bg-primary/20 backdrop-blur-sm text-primary-foreground px-4 py-2 rounded-full mb-8"
+            className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full mb-8"
           >
-            <CheckCircle className="w-4 h-4" />
+            <CheckCircle className="w-4 h-4 text-primary" />
             <span className="text-sm font-medium">N°1 du remplacement de pare-brise</span>
           </motion.div>
 
@@ -45,7 +45,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-secondary-foreground leading-tight mb-6"
+            className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white leading-tight mb-6 drop-shadow-lg"
           >
             Topglass : Remplacement Pare-Brise à{" "}
             <span className="text-primary">Marseille</span> & Partout en France
@@ -56,7 +56,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-lg md:text-xl text-secondary-foreground/80 mb-10 max-w-2xl mx-auto"
+            className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto drop-shadow-md"
           >
             Intervention rapide, franchise remboursée, zéro avance de frais. 
             Nos techniciens certifiés se déplacent chez vous.
@@ -88,10 +88,10 @@ const Hero = () => {
             {features.map((feature, index) => (
               <div
                 key={index}
-                className="flex items-center gap-2 text-secondary-foreground/90"
+                className="flex items-center gap-2 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-md"
               >
                 <feature.icon className="w-5 h-5 text-primary" />
-                <span className="font-medium text-black">{feature.text}</span>
+                <span className="font-medium text-gray-800">{feature.text}</span>
               </div>
             ))}
           </motion.div>
