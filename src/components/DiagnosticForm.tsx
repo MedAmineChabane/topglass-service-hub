@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import technicianRepair from "@/assets/technician-repair.png";
 
 const vehicleTypes = [
   { id: "voiture", label: "Voiture", icon: Car },
@@ -153,16 +154,34 @@ const DiagnosticForm = () => {
   return (
     <section id="diagnostic-form" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="font-display font-bold text-3xl md:text-4xl text-foreground mb-4">
-            Obtenez votre devis en 2 minutes
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Remplissez ce formulaire rapide et recevez une estimation gratuite pour votre intervention.
-          </p>
-        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Image */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="hidden lg:block"
+          >
+            <img
+              src={technicianRepair}
+              alt="Technicien Topglass réparant un pare-brise"
+              className="rounded-2xl shadow-medium w-full object-cover"
+            />
+          </motion.div>
 
-        <div className="max-w-2xl mx-auto">
+          {/* Form */}
+          <div>
+            <div className="text-center lg:text-left mb-8">
+              <h2 className="font-display font-bold text-3xl md:text-4xl text-foreground mb-4">
+                Obtenez votre devis en 2 minutes
+              </h2>
+              <p className="text-muted-foreground text-lg max-w-2xl">
+                Remplissez ce formulaire rapide et recevez une estimation gratuite pour votre intervention.
+              </p>
+            </div>
+
+            <div className="max-w-xl">
           {/* Progress Bar */}
           <div className="mb-8">
             <div className="flex justify-between mb-2">
@@ -414,6 +433,8 @@ const DiagnosticForm = () => {
               )}
             </div>
           </div>
+          </div>
+        </div>
         </div>
       </div>
     </section>
