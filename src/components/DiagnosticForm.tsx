@@ -161,13 +161,14 @@ const DiagnosticForm = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="lg:hidden mb-6"
+            className="lg:hidden mb-6 relative"
           >
             <img
               src={technicianRepair}
               alt="Technicien Topglass réparant un pare-brise"
-              className="rounded-xl shadow-soft w-full max-h-48 object-cover"
+              className="rounded-xl w-full max-h-48 object-cover"
             />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-muted/80 rounded-xl" />
           </motion.div>
 
           {/* Image - Desktop version (side by side) */}
