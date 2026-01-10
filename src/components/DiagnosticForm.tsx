@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { 
@@ -45,6 +45,14 @@ const DiagnosticForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const { toast } = useToast();
+  
+  // Parallax effect for desktop image
+  const imageRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: imageRef,
+    offset: ["start end", "end start"]
+  });
+  const imageY = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
   
   const [formData, setFormData] = useState({
     vehicleType: "",
@@ -171,20 +179,25 @@ const DiagnosticForm = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-muted/80 rounded-xl" />
           </motion.div>
 
-          {/* Image - Desktop version (side by side) */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="hidden lg:block"
+          {/* Image - Desktop version (side by side) with parallax */}
+          <div
+            ref={imageRef}
+            className="hidden lg:block overflow-hidden rounded-2xl shadow-medium"
           >
-            <img
-              src={technicianRepair}
-              alt="Technicien Topglass réparant un pare-brise"
-              className="rounded-2xl shadow-medium w-full object-cover"
-            />
-          </motion.div>
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              style={{ y: imageY }}
+            >
+              <img
+                src={technicianRepair}
+                alt="Technicien Topglass réparant un pare-brise"
+                className="w-full object-cover scale-110"
+              />
+            </motion.div>
+          </div>
 
           {/* Form */}
           <div>
