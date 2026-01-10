@@ -1,10 +1,20 @@
-import { useState } from "react";
-import { Menu, X, Phone, MapPin } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Menu, X, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const scrollToForm = () => {
     const formElement = document.getElementById("diagnostic-form");
@@ -15,15 +25,21 @@ const Header = () => {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-black backdrop-blur-md border-b border-border/20">
+    <header 
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled 
+          ? "bg-black/80 backdrop-blur-xl border-b border-white/10 shadow-lg" 
+          : "bg-transparent"
+      }`}
+    >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-20 md:h-24">
           {/* Logo */}
           <a href="/" className="flex items-center">
             <img 
               src="/assets/topglass-logo.png" 
               alt="Topglass - Remplacement pare-brise" 
-              className="h-16 md:h-20 w-auto"
+              className="h-20 md:h-24 w-auto transition-transform duration-300 hover:scale-105"
             />
           </a>
 
