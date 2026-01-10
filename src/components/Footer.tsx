@@ -1,16 +1,15 @@
 import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
 const Footer = () => {
   const scrollToForm = () => {
     const formElement = document.getElementById("diagnostic-form");
     if (formElement) {
-      formElement.scrollIntoView({ behavior: "smooth" });
+      formElement.scrollIntoView({
+        behavior: "smooth"
+      });
     }
   };
-
-  return (
-    <footer id="contact" className="bg-foreground text-background">
+  return <footer id="contact" className="bg-foreground text-background">
       {/* CTA Section */}
       <div className="container mx-auto px-4 py-12">
         <div className="bg-secondary rounded-2xl p-8 md:p-12 text-center">
@@ -21,17 +20,10 @@ const Footer = () => {
             Nos techniciens certifiés interviennent partout en France sous 48h.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              onClick={scrollToForm}
-              size="lg"
-              className="gradient-cta text-primary-foreground font-bold shadow-cta"
-            >
+            <Button onClick={scrollToForm} size="lg" className="gradient-cta text-primary-foreground font-bold shadow-cta">
               Demander un devis gratuit
             </Button>
-            <Button
-              size="lg"
-              className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold"
-            >
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold">
               <Phone className="w-4 h-4 mr-2" />
               01 23 45 67 89
             </Button>
@@ -114,12 +106,10 @@ const Footer = () => {
       {/* Bottom Bar */}
       <div className="container mx-auto px-4 py-6 border-t border-background/10">
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-background/50">
-          <p>© 2024 Topglass. Tous droits réservés.</p>
+          <p>© 2026 Topglass. Tous droits réservés.</p>
           <p>Agréé par toutes les compagnies d'assurance</p>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
