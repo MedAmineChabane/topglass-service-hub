@@ -86,7 +86,7 @@ const Hero = () => {
                 className="flex items-center gap-2 text-secondary-foreground/90"
               >
                 <feature.icon className="w-5 h-5 text-primary" />
-                <span className="font-medium">{feature.text}</span>
+                <span className="font-medium text-black">{feature.text}</span>
               </div>
             ))}
           </motion.div>
