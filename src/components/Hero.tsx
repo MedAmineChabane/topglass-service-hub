@@ -45,10 +45,13 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="font-display font-bold text-4xl md:text-5xl lg:text-6xl text-white leading-tight mb-6 drop-shadow-lg"
+            className="font-display font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6 drop-shadow-lg"
           >
-            Topglass : Remplacement Pare-Brise à{" "}
-            <span className="text-primary">Marseille</span> & Partout en France
+            <span className="text-white">Top</span>
+            <span className="text-primary">glass</span>
+            <span className="text-gray-900"> : Remplacement Pare-Brise à{" "}</span>
+            <span className="text-primary">Marseille</span>
+            <span className="text-gray-900"> & Partout en France</span>
           </motion.h1>
 
           {/* Subtitle */}
