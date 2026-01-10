@@ -29,9 +29,8 @@ const Footer = () => {
               Demander un devis gratuit
             </Button>
             <Button
-              variant="outline"
               size="lg"
-              className="border-secondary-foreground/30 text-secondary-foreground hover:bg-secondary-foreground/10"
+              className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold"
             >
               <Phone className="w-4 h-4 mr-2" />
               01 23 45 67 89
