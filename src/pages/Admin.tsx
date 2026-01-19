@@ -291,7 +291,7 @@ const Admin = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <img src={topglassLogo} alt="TopGlass" className="h-10" />
+              <img src={topglassLogo} alt="Topglass" className="h-10" />
               <div className="hidden sm:block">
                 <h1 className="text-white font-bold text-lg">Dashboard Admin</h1>
                 <p className="text-white/60 text-sm">Gestion des leads</p>

@@ -910,7 +910,7 @@ const Devis = () => {
                 pour vous proposer un professionnel qui s'occupera de votre devis. 
                 Si certaines informations manquent pour le bon suivi de votre dossier, 
                 nous vous contacterons. Et si vous avez des questions, nous sommes 
-                joignables au <span className="font-bold text-foreground">01 23 45 67 89</span> !
+                joignables au <a href="https://wa.me/33465849498" target="_blank" rel="noopener noreferrer" className="font-bold text-primary hover:underline">04 65 84 94 98</a> !
               </p>
 
               <Button

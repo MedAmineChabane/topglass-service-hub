@@ -226,6 +226,16 @@ const LeadDetailDialog = ({ lead, open, onOpenChange, onLeadUpdated }: LeadDetai
     return filePath.split('/').pop() || filePath;
   };
 
+  const isImage = (filePath: string) => {
+    const ext = filePath.split('.').pop()?.toLowerCase();
+    return ['jpg', 'jpeg', 'png', 'gif', 'webp'].includes(ext || '');
+  };
+
+  const getImageUrl = (filePath: string) => {
+    const { data } = supabase.storage.from('lead-attachments').getPublicUrl(filePath);
+    return data.publicUrl;
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
@@ -360,8 +370,43 @@ const LeadDetailDialog = ({ lead, open, onOpenChange, onLeadUpdated }: LeadDetai
                 Aucune pièce jointe
               </p>
             ) : (
-              <div className="space-y-2">
-                {attachments.map((filePath, index) => (
+              <div className="space-y-3">
+                {/* Image thumbnails grid */}
+                {attachments.filter(isImage).length > 0 && (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                    {attachments.filter(isImage).map((filePath, index) => (
+                      <div key={index} className="relative group">
+                        <img 
+                          src={getImageUrl(filePath)} 
+                          alt={getFileName(filePath)}
+                          className="w-full h-24 object-cover rounded-lg border cursor-pointer hover:opacity-90 transition-opacity"
+                          onClick={() => window.open(getImageUrl(filePath), '_blank')}
+                        />
+                        <div className="absolute top-1 right-1 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <Button
+                            size="icon"
+                            variant="secondary"
+                            className="h-6 w-6 bg-white/90"
+                            onClick={() => handleDownloadAttachment(filePath)}
+                          >
+                            <Download className="h-3 w-3" />
+                          </Button>
+                          <Button
+                            size="icon"
+                            variant="secondary"
+                            className="h-6 w-6 bg-white/90 text-destructive hover:text-destructive"
+                            onClick={() => handleDeleteAttachment(filePath)}
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                
+                {/* Other files list */}
+                {attachments.filter(f => !isImage(f)).map((filePath, index) => (
                   <div
                     key={index}
                     className="flex items-center justify-between bg-background rounded-md p-2 border"
