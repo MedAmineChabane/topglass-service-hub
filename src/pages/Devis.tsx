@@ -89,6 +89,46 @@ const situationOptions = [
   "Financer ces travaux moi-même",
 ];
 
+const frenchCities = [
+  "Marseille",
+  "Paris",
+  "Lyon",
+  "Toulouse",
+  "Nice",
+  "Nantes",
+  "Montpellier",
+  "Strasbourg",
+  "Bordeaux",
+  "Lille",
+  "Rennes",
+  "Reims",
+  "Toulon",
+  "Le Havre",
+  "Saint-Étienne",
+  "Grenoble",
+  "Dijon",
+  "Angers",
+  "Nîmes",
+  "Aix-en-Provence",
+  "Clermont-Ferrand",
+  "Le Mans",
+  "Brest",
+  "Tours",
+  "Amiens",
+  "Limoges",
+  "Perpignan",
+  "Metz",
+  "Besançon",
+  "Orléans",
+  "Rouen",
+  "Caen",
+  "Nancy",
+  "Avignon",
+  "Cannes",
+  "Antibes",
+  "Autre",
+];
+
 const contactPreferences = [
   { value: "email", label: "Email" },
   { value: "phone", label: "Appel" },
@@ -729,13 +769,22 @@ const Devis = () => {
                     />
                   </div>
                   <div className="relative">
-                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                    <Input
+                    <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10 pointer-events-none" />
+                    <Select
                       value={formData.location}
-                      onChange={(e) => updateFormData("location", e.target.value)}
-                      placeholder="LOCALISATION"
-                      className="pl-10 bg-white h-12 border-0 border-b-2 border-gray-200 rounded-none"
-                    />
+                      onValueChange={(value) => updateFormData("location", value)}
+                    >
+                      <SelectTrigger className="pl-10 bg-white h-12 border-0 border-b-2 border-gray-200 rounded-none text-left">
+                        <SelectValue placeholder="LOCALISATION" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-white max-h-[300px]">
+                        {frenchCities.map((city) => (
+                          <SelectItem key={city} value={city}>
+                            {city}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
                 </div>
 
