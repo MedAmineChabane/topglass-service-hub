@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const services = [
   { name: "Remplacement pare-brise", href: "#services" },
@@ -15,6 +16,7 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,11 +27,8 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scrollToForm = () => {
-    const formElement = document.getElementById("diagnostic-form");
-    if (formElement) {
-      formElement.scrollIntoView({ behavior: "smooth" });
-    }
+  const goToDevis = () => {
+    navigate("/devis");
     setIsMenuOpen(false);
   };
 
@@ -106,7 +105,7 @@ const Header = () => {
               <span className="font-semibold">01 23 45 67 89</span>
             </a>
             <Button 
-              onClick={scrollToForm}
+              onClick={goToDevis}
               className="gradient-cta text-primary-foreground font-semibold shadow-cta hover:opacity-90 transition-opacity animate-pulse-glow"
             >
               Devis gratuit
@@ -163,7 +162,7 @@ const Header = () => {
                 <span className="font-semibold">01 23 45 67 89</span>
               </a>
               <Button 
-                onClick={scrollToForm}
+                onClick={goToDevis}
                 className="gradient-cta text-primary-foreground font-semibold w-full animate-pulse-glow"
               >
                 Devis gratuit
