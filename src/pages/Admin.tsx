@@ -25,7 +25,8 @@ import {
   MapPin,
   Filter,
   BarChart3,
-  Trash2
+  Trash2,
+  Eye
 } from 'lucide-react';
 import {
   AlertDialog,
@@ -39,6 +40,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import topglassLogo from '@/assets/topglass-logo-transparent.png';
+import LeadDetailDialog from '@/components/LeadDetailDialog';
 
 interface Lead {
   id: string;
@@ -51,6 +53,8 @@ interface Lead {
   glass_type: string;
   location: string;
   status: string;
+  attachments?: string[];
+  notes?: string;
 }
 
 const statusOptions = [
@@ -68,6 +72,8 @@ const Admin = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
   const [dateFilter, setDateFilter] = useState('all');
+  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+  const [detailOpen, setDetailOpen] = useState(false);
   
   const { user, isAdmin, loading: authLoading, signOut } = useAuth();
   const navigate = useNavigate();
@@ -515,34 +521,47 @@ const Admin = () => {
                           </Select>
                         </TableCell>
                         <TableCell className="text-right">
-                          <AlertDialog>
-                            <AlertDialogTrigger asChild>
-                              <Button 
-                                variant="ghost" 
-                                size="icon"
-                                className="text-red-400 hover:text-red-300 hover:bg-red-500/20"
-                              >
-                                <Trash2 className="h-4 w-4" />
-                              </Button>
-                            </AlertDialogTrigger>
-                            <AlertDialogContent>
-                              <AlertDialogHeader>
-                                <AlertDialogTitle>Supprimer cette intervention ?</AlertDialogTitle>
-                                <AlertDialogDescription>
-                                  Cette action est irréversible. L'intervention de {lead.name} sera définitivement supprimée de la base de données.
-                                </AlertDialogDescription>
-                              </AlertDialogHeader>
-                              <AlertDialogFooter>
-                                <AlertDialogCancel>Annuler</AlertDialogCancel>
-                                <AlertDialogAction 
-                                  onClick={() => deleteLead(lead.id)}
-                                  className="bg-red-500 hover:bg-red-600"
+                          <div className="flex items-center justify-end gap-1">
+                            <Button 
+                              variant="ghost" 
+                              size="icon"
+                              className="text-primary hover:text-primary hover:bg-primary/20"
+                              onClick={() => {
+                                setSelectedLead(lead);
+                                setDetailOpen(true);
+                              }}
+                            >
+                              <Eye className="h-4 w-4" />
+                            </Button>
+                            <AlertDialog>
+                              <AlertDialogTrigger asChild>
+                                <Button 
+                                  variant="ghost" 
+                                  size="icon"
+                                  className="text-red-400 hover:text-red-300 hover:bg-red-500/20"
                                 >
-                                  Supprimer
-                                </AlertDialogAction>
-                              </AlertDialogFooter>
-                            </AlertDialogContent>
-                          </AlertDialog>
+                                  <Trash2 className="h-4 w-4" />
+                                </Button>
+                              </AlertDialogTrigger>
+                              <AlertDialogContent>
+                                <AlertDialogHeader>
+                                  <AlertDialogTitle>Supprimer cette intervention ?</AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    Cette action est irréversible. L'intervention de {lead.name} sera définitivement supprimée de la base de données.
+                                  </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                  <AlertDialogCancel>Annuler</AlertDialogCancel>
+                                  <AlertDialogAction 
+                                    onClick={() => deleteLead(lead.id)}
+                                    className="bg-red-500 hover:bg-red-600"
+                                  >
+                                    Supprimer
+                                  </AlertDialogAction>
+                                </AlertDialogFooter>
+                              </AlertDialogContent>
+                            </AlertDialog>
+                          </div>
                         </TableCell>
                       </TableRow>
                     ))}
@@ -553,6 +572,17 @@ const Admin = () => {
           </CardContent>
         </Card>
       </main>
+
+      {/* Lead Detail Dialog */}
+      <LeadDetailDialog
+        lead={selectedLead}
+        open={detailOpen}
+        onOpenChange={setDetailOpen}
+        onLeadUpdated={(updatedLead) => {
+          setLeads(leads.map(l => l.id === updatedLead.id ? updatedLead : l));
+          setSelectedLead(updatedLead);
+        }}
+      />
     </div>
   );
 };
