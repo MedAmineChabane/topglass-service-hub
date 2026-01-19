@@ -301,30 +301,35 @@ const Devis = () => {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.5, duration: 0.5 }}
-                    className="flex items-center bg-white rounded-lg border-2 border-gray-200 overflow-hidden shadow-xl mx-auto max-w-sm"
+                    className="mx-auto max-w-sm"
                   >
-                    <div className="bg-blue-700 text-white px-4 py-5 flex flex-col items-center justify-center">
-                      <div className="flex gap-0.5 mb-1">
-                        {[...Array(12)].map((_, i) => (
-                          <div key={i} className="w-1 h-1 bg-yellow-400 rounded-full" />
-                        ))}
+                    <label className="block text-sm font-medium text-muted-foreground mb-2 text-center">
+                      Immatriculation
+                    </label>
+                    <div className="flex items-center bg-white rounded-lg border-2 border-gray-200 overflow-hidden shadow-xl">
+                      <div className="bg-blue-700 text-white px-4 py-5 flex flex-col items-center justify-center">
+                        <div className="flex gap-0.5 mb-1">
+                          {[...Array(12)].map((_, i) => (
+                            <div key={i} className="w-1 h-1 bg-yellow-400 rounded-full" />
+                          ))}
+                        </div>
+                        <span className="text-lg font-bold">F</span>
                       </div>
-                      <span className="text-lg font-bold">F</span>
+                      <Input
+                        value={formData.immatriculation}
+                        onChange={(e) => updateFormData("immatriculation", e.target.value.toUpperCase())}
+                        placeholder="AB-123-CD"
+                        className="border-0 text-center text-2xl font-bold tracking-widest flex-1 h-16 focus-visible:ring-0 bg-transparent"
+                        maxLength={9}
+                      />
+                      <Button
+                        onClick={handleImmatriculationSubmit}
+                        disabled={formData.immatriculation.length < 7}
+                        className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-none h-16 px-8 text-lg font-bold"
+                      >
+                        OK
+                      </Button>
                     </div>
-                    <Input
-                      value={formData.immatriculation}
-                      onChange={(e) => updateFormData("immatriculation", e.target.value.toUpperCase())}
-                      placeholder="AB-123-CD"
-                      className="border-0 text-center text-2xl font-bold tracking-widest flex-1 h-16 focus-visible:ring-0 bg-transparent"
-                      maxLength={9}
-                    />
-                    <Button
-                      onClick={handleImmatriculationSubmit}
-                      disabled={formData.immatriculation.length < 7}
-                      className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-none h-16 px-8 text-lg font-bold"
-                    >
-                      OK
-                    </Button>
                   </motion.div>
                 </div>
               </div>
