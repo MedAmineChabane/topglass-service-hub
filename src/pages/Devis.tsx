@@ -232,7 +232,7 @@ const Devis = () => {
       <Header minimal />
 
       {/* Progress Bar */}
-      <div className="bg-[#2a2a2a] pt-20 pb-4">
+      <div className="bg-[#2a2a2a] pt-8 pb-4">
         <div className="container mx-auto px-4">
           <div className="flex justify-center items-center gap-2 md:gap-4">
             {steps.map((s, index) => (
