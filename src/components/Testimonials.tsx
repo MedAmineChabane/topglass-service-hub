@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Star, Quote } from "lucide-react";
-import technicianHandover from "@/assets/technician-handover.png";
+import technicianHandover from "@/assets/technician-handover-new.png";
 import Autoplay from "embla-carousel-autoplay";
 import {
   Carousel,
