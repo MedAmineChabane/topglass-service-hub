@@ -109,7 +109,7 @@ const Header = ({ minimal = false }: HeaderProps) => {
             <a href="#temoignages" className="text-white hover:text-primary transition-colors font-bold">
               Témoignages
             </a>
-            <a href="#contact" className="text-white hover:text-primary transition-colors font-bold">
+            <a href="/contact" className="text-white hover:text-primary transition-colors font-bold">
               Contact
             </a>
           </nav>
@@ -169,7 +169,7 @@ const Header = ({ minimal = false }: HeaderProps) => {
                 Témoignages
               </a>
               <a 
-                href="#contact" 
+                href="/contact" 
                 className="text-foreground py-2 font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
