@@ -79,23 +79,20 @@ const Footer = ({ hideCta = false }: FooterProps) => {
           <div>
             <h4 className="font-display font-semibold text-lg mb-4">Nos Services</h4>
             <ul className="space-y-3 text-background/70">
-              <li><a href="#" className="hover:text-primary transition-colors">Remplacement pare-brise</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Réparation d'impact</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Vitre latérale</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Lunette arrière</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Toit panoramique</a></li>
+              <li><a href="/devis" className="hover:text-primary transition-colors">Remplacement pare-brise</a></li>
+              <li><a href="/devis" className="hover:text-primary transition-colors">Réparation d'impact</a></li>
+              <li><a href="/devis" className="hover:text-primary transition-colors">Vitre latérale</a></li>
+              <li><a href="/devis" className="hover:text-primary transition-colors">Lunette arrière</a></li>
+              <li><a href="/devis" className="hover:text-primary transition-colors">Toit panoramique</a></li>
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* Informations */}
           <div>
             <h4 className="font-display font-semibold text-lg mb-4">Informations</h4>
             <ul className="space-y-3 text-background/70">
-              <li><a href="#" className="hover:text-primary transition-colors">À propos</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Nos centres</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Mentions légales</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">Politique de confidentialité</a></li>
-              <li><a href="#" className="hover:text-primary transition-colors">CGV</a></li>
+              <li><a href="/devis" className="hover:text-primary transition-colors">Demander un devis</a></li>
+              <li><a href="/contact" className="hover:text-primary transition-colors">Nous contacter</a></li>
             </ul>
           </div>
 

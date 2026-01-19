@@ -115,7 +115,7 @@ const Auth = () => {
         <div className="text-center mb-8">
           <img 
             src={topglassLogo} 
-            alt="TopGlass" 
+            alt="Topglass" 
             className="h-16 mx-auto mb-4"
           />
           <div className="flex items-center justify-center gap-2 text-white/80">
@@ -245,7 +245,7 @@ const Auth = () => {
         </Card>
 
         <p className="text-center text-white/50 text-sm mt-6">
-          © {new Date().getFullYear()} TopGlass - Administration
+          © {new Date().getFullYear()} Topglass - Administration
         </p>
       </div>
     </div>
