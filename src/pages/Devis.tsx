@@ -229,7 +229,7 @@ const Devis = () => {
 
   return (
     <div className="min-h-screen bg-[#f5f5f5]">
-      <Header />
+      <Header minimal />
 
       {/* Progress Bar */}
       <div className="bg-[#2a2a2a] pt-20 pb-4">

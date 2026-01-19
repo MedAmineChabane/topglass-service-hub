@@ -12,7 +12,11 @@ const services = [
   { name: "Toit panoramique", href: "#services" },
 ];
 
-const Header = () => {
+interface HeaderProps {
+  minimal?: boolean;
+}
+
+const Header = ({ minimal = false }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isServicesOpen, setIsServicesOpen] = useState(false);
@@ -31,6 +35,21 @@ const Header = () => {
     navigate("/devis");
     setIsMenuOpen(false);
   };
+
+  // Header minimal avec seulement le logo
+  if (minimal) {
+    return (
+      <header className="fixed top-4 left-4 z-50">
+        <a href="/" className="flex items-center">
+          <img 
+            src="/assets/topglass-logo.png" 
+            alt="Topglass - Remplacement pare-brise" 
+            className="h-16 w-16 md:h-20 md:w-20 rounded-full object-cover border-2 border-white/80 shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]"
+          />
+        </a>
+      </header>
+    );
+  }
 
   return (
     <header 
