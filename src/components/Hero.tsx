@@ -45,7 +45,10 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="font-display font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6 drop-shadow-lg"
+            className="font-display font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6"
+            style={{
+              textShadow: '2px 2px 0 rgba(0,0,0,0.8), -2px -2px 0 rgba(0,0,0,0.8), 2px -2px 0 rgba(0,0,0,0.8), -2px 2px 0 rgba(0,0,0,0.8), 0 4px 8px rgba(0,0,0,0.5)'
+            }}
           >
             <span className="text-white">Top</span>
             <span className="text-sky-500">glass</span>
