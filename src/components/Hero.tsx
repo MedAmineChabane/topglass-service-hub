@@ -28,7 +28,7 @@ const Hero = () => {
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
       
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="max-w-2xl text-left">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -59,7 +59,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto drop-shadow-md"
+            className="text-lg md:text-xl text-white/90 mb-10 max-w-xl drop-shadow-md"
           >
             Intervention rapide, franchise remboursée, zéro avance de frais. 
             Nos techniciens certifiés se déplacent chez vous.
@@ -86,7 +86,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex flex-wrap justify-center gap-6 md:gap-10 pb-16"
+            className="flex flex-wrap gap-4 md:gap-6 pb-16"
           >
             {features.map((feature, index) => (
               <div
