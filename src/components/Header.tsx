@@ -60,13 +60,22 @@ const Header = ({ minimal = false }: HeaderProps) => {
       }`}
     >
       <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-20 md:h-24">
+        <div className={`flex items-center justify-between transition-all duration-300 ${isScrolled ? 'h-14 md:h-16' : 'h-20 md:h-24'}`}>
           {/* Logo */}
           <a href="/" className="flex items-center">
-            <img 
+            <motion.img 
               src="/assets/topglass-logo.png" 
               alt="Topglass - Remplacement pare-brise" 
-              className="h-20 w-20 md:h-28 md:w-28 rounded-full object-cover border-2 border-white/80 shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]"
+              animate={{
+                width: isScrolled ? 48 : 80,
+                height: isScrolled ? 48 : 80,
+              }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="md:w-28 md:h-28 rounded-full object-cover border-2 border-white/80 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]"
+              style={{
+                width: isScrolled ? 48 : 80,
+                height: isScrolled ? 48 : 80,
+              }}
             />
           </a>
 
