@@ -58,36 +58,42 @@ export type Database = {
       }
       leads: {
         Row: {
+          attachments: string[] | null
           created_at: string
           email: string
           glass_type: string
           id: string
           location: string
           name: string
+          notes: string | null
           phone: string
           status: string | null
           vehicle_brand: string
           vehicle_type: string
         }
         Insert: {
+          attachments?: string[] | null
           created_at?: string
           email: string
           glass_type: string
           id?: string
           location: string
           name: string
+          notes?: string | null
           phone: string
           status?: string | null
           vehicle_brand: string
           vehicle_type: string
         }
         Update: {
+          attachments?: string[] | null
           created_at?: string
           email?: string
           glass_type?: string
           id?: string
           location?: string
           name?: string
+          notes?: string | null
           phone?: string
           status?: string | null
           vehicle_brand?: string
