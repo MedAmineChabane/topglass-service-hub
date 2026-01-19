@@ -23,10 +23,16 @@ const Footer = () => {
             <Button onClick={goToDevis} size="lg" className="gradient-cta text-primary-foreground font-bold shadow-cta">
               Demander un devis gratuit
             </Button>
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold">
-              <Phone className="w-4 h-4 mr-2" />
-              01 23 45 67 89
-            </Button>
+            <a 
+              href="https://wa.me/33465849498"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold">
+                <Phone className="w-4 h-4 mr-2" />
+                04 65 84 94 98
+              </Button>
+            </a>
           </div>
         </div>
       </div>
@@ -91,13 +97,25 @@ const Footer = () => {
           <div>
             <h4 className="font-display font-semibold text-lg mb-4">Contact</h4>
             <ul className="space-y-4 text-background/70">
-              <li className="flex items-center gap-3">
-                <Phone className="w-5 h-5 text-primary" />
-                <span>01 23 45 67 89</span>
+              <li>
+                <a 
+                  href="https://wa.me/33465849498"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 hover:text-primary transition-colors"
+                >
+                  <Phone className="w-5 h-5 text-primary" />
+                  <span>04 65 84 94 98</span>
+                </a>
               </li>
-              <li className="flex items-center gap-3">
-                <Mail className="w-5 h-5 text-primary" />
-                <span>contact@topglass.fr</span>
+              <li>
+                <a 
+                  href="mailto:Topglassfrance@gmail.com"
+                  className="flex items-center gap-3 hover:text-primary transition-colors"
+                >
+                  <Mail className="w-5 h-5 text-primary" />
+                  <span>Topglassfrance@gmail.com</span>
+                </a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
