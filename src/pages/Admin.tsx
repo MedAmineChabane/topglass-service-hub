@@ -24,8 +24,20 @@ import {
   Car,
   MapPin,
   Filter,
-  BarChart3
+  BarChart3,
+  Trash2
 } from 'lucide-react';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import topglassLogo from '@/assets/topglass-logo-transparent.png';
 
 interface Lead {
@@ -158,6 +170,27 @@ const Admin = () => {
       toast({
         title: "Succès",
         description: "Statut mis à jour",
+      });
+    }
+  };
+
+  const deleteLead = async (leadId: string) => {
+    const { error } = await supabase
+      .from('leads')
+      .delete()
+      .eq('id', leadId);
+
+    if (error) {
+      toast({
+        title: "Erreur",
+        description: "Impossible de supprimer l'intervention",
+        variant: "destructive",
+      });
+    } else {
+      setLeads(leads.filter(lead => lead.id !== leadId));
+      toast({
+        title: "Succès",
+        description: "Intervention supprimée",
       });
     }
   };
@@ -421,6 +454,7 @@ const Admin = () => {
                       <TableHead className="text-white/70">Vitrage</TableHead>
                       <TableHead className="text-white/70">Localisation</TableHead>
                       <TableHead className="text-white/70">Statut</TableHead>
+                      <TableHead className="text-white/70 text-right">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -479,6 +513,36 @@ const Admin = () => {
                               ))}
                             </SelectContent>
                           </Select>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                              <Button 
+                                variant="ghost" 
+                                size="icon"
+                                className="text-red-400 hover:text-red-300 hover:bg-red-500/20"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </Button>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                              <AlertDialogHeader>
+                                <AlertDialogTitle>Supprimer cette intervention ?</AlertDialogTitle>
+                                <AlertDialogDescription>
+                                  Cette action est irréversible. L'intervention de {lead.name} sera définitivement supprimée de la base de données.
+                                </AlertDialogDescription>
+                              </AlertDialogHeader>
+                              <AlertDialogFooter>
+                                <AlertDialogCancel>Annuler</AlertDialogCancel>
+                                <AlertDialogAction 
+                                  onClick={() => deleteLead(lead.id)}
+                                  className="bg-red-500 hover:bg-red-600"
+                                >
+                                  Supprimer
+                                </AlertDialogAction>
+                              </AlertDialogFooter>
+                            </AlertDialogContent>
+                          </AlertDialog>
                         </TableCell>
                       </TableRow>
                     ))}
