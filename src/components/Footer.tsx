@@ -1,14 +1,14 @@
 import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+
 const Footer = () => {
-  const scrollToForm = () => {
-    const formElement = document.getElementById("diagnostic-form");
-    if (formElement) {
-      formElement.scrollIntoView({
-        behavior: "smooth"
-      });
-    }
+  const navigate = useNavigate();
+
+  const goToDevis = () => {
+    navigate("/devis");
   };
+
   return <footer id="contact" className="bg-foreground text-background">
       {/* CTA Section */}
       <div className="container mx-auto px-4 py-12">
@@ -20,7 +20,7 @@ const Footer = () => {
             Nos techniciens certifiés interviennent partout en France sous 48h.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button onClick={scrollToForm} size="lg" className="gradient-cta text-primary-foreground font-bold shadow-cta">
+            <Button onClick={goToDevis} size="lg" className="gradient-cta text-primary-foreground font-bold shadow-cta">
               Demander un devis gratuit
             </Button>
             <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold">
