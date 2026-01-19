@@ -2,7 +2,11 @@ import { Phone, Mail, MapPin, Facebook, Instagram, Linkedin } from "lucide-react
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
-const Footer = () => {
+interface FooterProps {
+  hideCta?: boolean;
+}
+
+const Footer = ({ hideCta = false }: FooterProps) => {
   const navigate = useNavigate();
 
   const goToDevis = () => {
@@ -11,31 +15,33 @@ const Footer = () => {
 
   return <footer id="contact" className="bg-foreground text-background">
       {/* CTA Section */}
-      <div className="container mx-auto px-4 py-12">
-        <div className="bg-secondary rounded-2xl p-8 md:p-12 text-center">
-          <h3 className="font-display font-bold text-2xl md:text-3xl text-secondary-foreground mb-4">
-            Besoin d'une intervention rapide ?
-          </h3>
-          <p className="text-secondary-foreground/80 mb-8 max-w-xl mx-auto">
-            Nos techniciens certifiés interviennent partout en France sous 48h.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button onClick={goToDevis} size="lg" className="gradient-cta text-primary-foreground font-bold shadow-cta">
-              Demander un devis gratuit
-            </Button>
-            <a 
-              href="https://wa.me/33465849498"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold">
-                <Phone className="w-4 h-4 mr-2" />
-                04 65 84 94 98
+      {!hideCta && (
+        <div className="container mx-auto px-4 py-12">
+          <div className="bg-secondary rounded-2xl p-8 md:p-12 text-center">
+            <h3 className="font-display font-bold text-2xl md:text-3xl text-secondary-foreground mb-4">
+              Besoin d'une intervention rapide ?
+            </h3>
+            <p className="text-secondary-foreground/80 mb-8 max-w-xl mx-auto">
+              Nos techniciens certifiés interviennent partout en France sous 48h.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button onClick={goToDevis} size="lg" className="gradient-cta text-primary-foreground font-bold shadow-cta">
+                Demander un devis gratuit
               </Button>
-            </a>
+              <a 
+                href="https://wa.me/33465849498"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold">
+                  <Phone className="w-4 h-4 mr-2" />
+                  04 65 84 94 98
+                </Button>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Main Footer */}
       <div className="container mx-auto px-4 py-12 border-t border-background/10">

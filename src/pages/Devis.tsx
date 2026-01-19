@@ -895,7 +895,7 @@ const Devis = () => {
         </AnimatePresence>
       </main>
 
-      <Footer />
+      <Footer hideCta />
     </div>
   );
 };
