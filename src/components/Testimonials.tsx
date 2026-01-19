@@ -104,11 +104,13 @@ const Testimonials = () => {
             transition={{ duration: 0.6 }}
             className="order-2 lg:order-1"
           >
-            <img
-              src={technicianHandover}
-              alt="Technicien Topglass remettant les clés à une cliente satisfaite"
-              className="rounded-2xl shadow-medium w-full object-cover"
-            />
+            <div className="overflow-hidden rounded-2xl shadow-medium">
+              <img
+                src={technicianHandover}
+                alt="Technicien Topglass remettant les clés à une cliente satisfaite"
+                className="w-full object-cover transition-transform duration-500 hover:scale-110"
+              />
+            </div>
           </motion.div>
 
           {/* Text content */}
