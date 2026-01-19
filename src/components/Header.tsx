@@ -70,49 +70,59 @@ const Header = ({ minimal = false }: HeaderProps) => {
             />
           </a>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            {/* Services Dropdown */}
-            <div 
-              className="relative"
-              onMouseEnter={() => setIsServicesOpen(true)}
-              onMouseLeave={() => setIsServicesOpen(false)}
-            >
-              <button className="flex items-center gap-1 text-white hover:text-primary transition-colors font-bold">
-                Services
-                <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isServicesOpen ? 'rotate-180' : ''}`} />
-              </button>
-              
-              <AnimatePresence>
-                {isServicesOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ duration: 0.2 }}
-                    className="absolute top-full left-0 mt-2 w-56 bg-black/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-xl overflow-hidden z-50"
-                  >
-                    {services.map((service, index) => (
-                      <a
-                        key={index}
-                        href={service.href}
-                        className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/10 transition-colors text-sm font-medium"
+          {/* Desktop Navigation - Hidden when scrolled */}
+          <AnimatePresence>
+            {!isScrolled && (
+              <motion.nav 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="hidden md:flex items-center gap-8"
+              >
+                {/* Services Dropdown */}
+                <div 
+                  className="relative"
+                  onMouseEnter={() => setIsServicesOpen(true)}
+                  onMouseLeave={() => setIsServicesOpen(false)}
+                >
+                  <button className="flex items-center gap-1 text-white hover:text-primary transition-colors font-bold">
+                    Services
+                    <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${isServicesOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  
+                  <AnimatePresence>
+                    {isServicesOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        transition={{ duration: 0.2 }}
+                        className="absolute top-full left-0 mt-2 w-56 bg-black/95 backdrop-blur-xl rounded-xl border border-white/10 shadow-xl overflow-hidden z-50"
                       >
-                        {service.name}
-                      </a>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
+                        {services.map((service, index) => (
+                          <a
+                            key={index}
+                            href={service.href}
+                            className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/10 transition-colors text-sm font-medium"
+                          >
+                            {service.name}
+                          </a>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
 
-            <a href="#temoignages" className="text-white hover:text-primary transition-colors font-bold">
-              Témoignages
-            </a>
-            <a href="/contact" className="text-white hover:text-primary transition-colors font-bold">
-              Contact
-            </a>
-          </nav>
+                <a href="#temoignages" className="text-white hover:text-primary transition-colors font-bold">
+                  Témoignages
+                </a>
+                <a href="/contact" className="text-white hover:text-primary transition-colors font-bold">
+                  Contact
+                </a>
+              </motion.nav>
+            )}
+          </AnimatePresence>
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
