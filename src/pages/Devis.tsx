@@ -30,6 +30,9 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CarIllustration from "@/components/illustrations/CarIllustration";
+import GlassServiceIcon from "@/components/illustrations/GlassServiceIcon";
+import BodyworkServiceIcon from "@/components/illustrations/BodyworkServiceIcon";
 
 // Step configuration
 const steps = [
@@ -289,38 +292,40 @@ const Devis = () => {
               </div>
 
               <div className="flex flex-col items-center">
-                {/* Car illustration */}
-                <div className="relative w-full max-w-md">
-                  <svg viewBox="0 0 400 200" className="w-full text-gray-300 stroke-current fill-none stroke-2">
-                    <path d="M50 120 L80 120 L100 80 L300 80 L320 120 L350 120" />
-                    <ellipse cx="100" cy="140" rx="30" ry="30" />
-                    <ellipse cx="300" cy="140" rx="30" ry="30" />
-                    <path d="M120 80 L130 60 L270 60 L280 80" />
-                    <ellipse cx="100" cy="140" rx="15" ry="15" />
-                    <ellipse cx="300" cy="140" rx="15" ry="15" />
-                  </svg>
+                {/* Car illustration améliorée */}
+                <div className="relative w-full max-w-lg">
+                  <CarIllustration className="mb-8" highlightWindshield={true} />
 
                   {/* License plate input */}
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center bg-white rounded-md border-2 border-gray-300 overflow-hidden shadow-lg">
-                    <div className="bg-blue-700 text-white px-3 py-4 flex flex-col items-center justify-center">
-                      <div className="text-yellow-400 text-xs">★★★</div>
-                      <span className="text-sm font-bold">F</span>
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 1.5, duration: 0.5 }}
+                    className="flex items-center bg-white rounded-lg border-2 border-gray-200 overflow-hidden shadow-xl mx-auto max-w-sm"
+                  >
+                    <div className="bg-blue-700 text-white px-4 py-5 flex flex-col items-center justify-center">
+                      <div className="flex gap-0.5 mb-1">
+                        {[...Array(12)].map((_, i) => (
+                          <div key={i} className="w-1 h-1 bg-yellow-400 rounded-full" />
+                        ))}
+                      </div>
+                      <span className="text-lg font-bold">F</span>
                     </div>
                     <Input
                       value={formData.immatriculation}
                       onChange={(e) => updateFormData("immatriculation", e.target.value.toUpperCase())}
                       placeholder="AB-123-CD"
-                      className="border-0 text-center text-2xl font-bold tracking-widest w-48 h-14 focus-visible:ring-0"
+                      className="border-0 text-center text-2xl font-bold tracking-widest flex-1 h-16 focus-visible:ring-0 bg-transparent"
                       maxLength={9}
                     />
                     <Button
                       onClick={handleImmatriculationSubmit}
                       disabled={formData.immatriculation.length < 7}
-                      className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-none h-14 px-6"
+                      className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-none h-16 px-8 text-lg font-bold"
                     >
                       OK
                     </Button>
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             </motion.div>
@@ -457,28 +462,28 @@ const Devis = () => {
               <div className="space-y-6">
                 <div>
                   <h3 className="font-semibold text-lg mb-4">Quel est le type de demande ?</h3>
-                  <div className="flex gap-4">
+                  <div className="flex gap-6">
                     <button
                       onClick={() => updateFormData("serviceType", "carrosserie")}
-                      className={`flex flex-col items-center gap-2 p-6 rounded-xl transition-all ${
+                      className={`flex flex-col items-center gap-3 p-8 rounded-2xl transition-all transform hover:scale-105 ${
                         formData.serviceType === "carrosserie"
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-white border-2 border-gray-200 hover:border-primary/50"
+                          ? "bg-primary text-primary-foreground shadow-lg"
+                          : "bg-white border-2 border-gray-200 hover:border-primary/50 hover:shadow-md"
                       }`}
                     >
-                      <Wrench className="w-10 h-10" />
-                      <span className="font-medium text-sm uppercase">Carrosserie</span>
+                      <BodyworkServiceIcon isSelected={formData.serviceType === "carrosserie"} />
+                      <span className="font-semibold text-sm uppercase tracking-wide">Carrosserie</span>
                     </button>
                     <button
                       onClick={() => updateFormData("serviceType", "vitrage")}
-                      className={`flex flex-col items-center gap-2 p-6 rounded-xl transition-all ${
+                      className={`flex flex-col items-center gap-3 p-8 rounded-2xl transition-all transform hover:scale-105 ${
                         formData.serviceType === "vitrage"
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-white border-2 border-gray-200 hover:border-primary/50"
+                          ? "bg-primary text-primary-foreground shadow-lg"
+                          : "bg-white border-2 border-gray-200 hover:border-primary/50 hover:shadow-md"
                       }`}
                     >
-                      <Car className="w-10 h-10" />
-                      <span className="font-medium text-sm uppercase">Vitrage</span>
+                      <GlassServiceIcon isSelected={formData.serviceType === "vitrage"} />
+                      <span className="font-semibold text-sm uppercase tracking-wide">Vitrage</span>
                     </button>
                   </div>
                 </div>
