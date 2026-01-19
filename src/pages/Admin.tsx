@@ -303,7 +303,7 @@ const Admin = () => {
                 onClick={handleSignOut} 
                 variant="outline" 
                 size="sm"
-                className="border-white/20 text-white hover:bg-white/10"
+                className="border-primary/30 text-primary hover:bg-primary/10 bg-white/90"
               >
                 <LogOut className="h-4 w-4 mr-2" />
                 <span className="hidden sm:inline">Déconnexion</span>
@@ -414,7 +414,7 @@ const Admin = () => {
                   onClick={fetchLeads} 
                   variant="outline" 
                   size="icon"
-                  className="border-white/20 text-white hover:bg-white/10"
+                  className="border-primary/30 text-primary hover:bg-primary/10 bg-white"
                 >
                   <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
                 </Button>
