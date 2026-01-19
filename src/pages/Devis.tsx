@@ -176,7 +176,7 @@ const Devis = () => {
       case 2:
         return true; // serviceType always has a default value
       case 3:
-        return formData.situation !== "" && formData.description.length >= 10;
+        return formData.situation !== "" && formData.description.length >= 3;
       case 4:
         return formData.civility && 
                formData.lastName && 
