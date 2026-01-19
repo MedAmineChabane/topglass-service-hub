@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Shield, Clock, MapPin, CheckCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import heroBackground from "@/assets/hero-background.png";
 
 const Hero = () => {
-  const scrollToForm = () => {
-    const formElement = document.getElementById("diagnostic-form");
-    if (formElement) {
-      formElement.scrollIntoView({ behavior: "smooth" });
-    }
+  const navigate = useNavigate();
+
+  const goToDevis = () => {
+    navigate("/devis");
   };
 
   const features = [
@@ -73,7 +73,7 @@ const Hero = () => {
             className="mb-12"
           >
             <Button
-              onClick={scrollToForm}
+              onClick={goToDevis}
               size="lg"
               className="gradient-cta text-primary-foreground font-bold text-lg px-10 py-7 rounded-xl shadow-cta hover:opacity-90 transition-all animate-pulse-glow"
             >
