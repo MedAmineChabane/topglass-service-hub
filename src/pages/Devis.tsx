@@ -30,7 +30,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CarIllustration from "@/components/illustrations/CarIllustration";
+import carIllustration from "@/assets/car-illustration.png";
 import GlassServiceIcon from "@/components/illustrations/GlassServiceIcon";
 import BodyworkServiceIcon from "@/components/illustrations/BodyworkServiceIcon";
 
@@ -292,9 +292,9 @@ const Devis = () => {
               </div>
 
               <div className="flex flex-col items-center">
-                {/* Car illustration améliorée */}
+                {/* Car illustration */}
                 <div className="relative w-full max-w-lg">
-                  <CarIllustration className="mb-8" highlightWindshield={true} />
+                  <img src={carIllustration} alt="Illustration voiture" className="w-full mb-8" />
 
                   {/* License plate input */}
                   <motion.div 
