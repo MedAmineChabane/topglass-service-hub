@@ -639,7 +639,7 @@ const Devis = () => {
               transition={{ duration: 0.3 }}
               className="grid grid-cols-1 lg:grid-cols-2 gap-12"
             >
-              <div>
+              <div className="lg:pr-8">
                 <Button
                   variant="ghost"
                   onClick={prevStep}
@@ -648,14 +648,27 @@ const Devis = () => {
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Retour
                 </Button>
-                <h1 className="font-display font-black text-3xl md:text-4xl text-foreground mb-6 uppercase italic">
-                  Vous y êtes presque !
-                </h1>
-                <p className="text-muted-foreground text-lg">
-                  Laissez-nous vos coordonnées ❤️ ! L'équipe Topglass étudie 
-                  votre demande, puis trouve un professionnel proche de chez vous 
-                  pour établir un devis.
-                </p>
+                
+                <div className="relative">
+                  <div className="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-primary via-primary/50 to-transparent rounded-full" />
+                  
+                  <h1 className="font-display font-black text-3xl md:text-4xl lg:text-5xl text-foreground mb-4 uppercase italic">
+                    Plus qu'une étape !
+                  </h1>
+                  
+                  <div className="space-y-4 text-muted-foreground">
+                    <p className="text-lg md:text-xl">
+                      Renseignez vos coordonnées pour recevoir votre <span className="text-primary font-semibold">devis personnalisé gratuit</span>.
+                    </p>
+                    
+                    <div className="flex items-start gap-3 bg-white/50 backdrop-blur-sm rounded-xl p-4 border border-primary/10">
+                      <CheckCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                      <p className="text-sm">
+                        Notre équipe analyse votre demande et vous recontacte sous <span className="font-semibold text-foreground">24h maximum</span>.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               <div className="space-y-4">
