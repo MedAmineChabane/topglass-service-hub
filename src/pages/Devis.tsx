@@ -591,9 +591,12 @@ const Devis = () => {
                   </Select>
                 </div>
 
-                {/* Description */}
+                {/* Description - Optional */}
                 <div>
-                  <h3 className="font-semibold text-lg mb-2">Dites-nous en plus sur votre sinistre</h3>
+                  <h3 className="font-semibold text-lg mb-2">
+                    Dites-nous en plus sur votre sinistre
+                    <span className="text-muted-foreground text-sm font-normal ml-2">(optionnel)</span>
+                  </h3>
                   <Textarea
                     value={formData.description}
                     onChange={(e) => updateFormData("description", e.target.value)}
@@ -617,7 +620,6 @@ const Devis = () => {
 
                 <Button
                   onClick={nextStep}
-                  disabled={!formData.situation || formData.description.length < 10}
                   className="w-full bg-primary hover:bg-primary/90 text-primary-foreground h-12 text-lg font-semibold"
                 >
                   SUIVANT
