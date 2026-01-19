@@ -237,7 +237,8 @@ const Devis = () => {
     setIsSubmitting(true);
 
     try {
-      const { error } = await supabase.from("leads").insert({
+      // First, create the lead to get its ID
+      const { data: leadData, error: leadError } = await supabase.from("leads").insert({
         vehicle_type: `${formData.vehicleBrand} ${formData.vehicleModel} - ${formData.vehicleType}`,
         glass_type: formData.serviceType,
         vehicle_brand: formData.vehicleBrand,
@@ -245,9 +246,38 @@ const Devis = () => {
         name: `${formData.civility} ${formData.firstName} ${formData.lastName}`,
         phone: formData.phone,
         email: formData.email,
-      });
+        notes: formData.description || null,
+      }).select('id').single();
 
-      if (error) throw error;
+      if (leadError) throw leadError;
+
+      const leadId = leadData.id;
+
+      // Upload photos if any
+      if (formData.photos.length > 0) {
+        const uploadedPaths: string[] = [];
+
+        for (const photo of formData.photos) {
+          const fileExt = photo.name.split('.').pop();
+          const fileName = `${leadId}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+
+          const { error: uploadError } = await supabase.storage
+            .from('lead-attachments')
+            .upload(fileName, photo);
+
+          if (!uploadError) {
+            uploadedPaths.push(fileName);
+          }
+        }
+
+        // Update lead with attachment paths
+        if (uploadedPaths.length > 0) {
+          await supabase
+            .from('leads')
+            .update({ attachments: uploadedPaths })
+            .eq('id', leadId);
+        }
+      }
 
       setStep(5);
     } catch (error) {
