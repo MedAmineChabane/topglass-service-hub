@@ -237,6 +237,24 @@ const Devis = () => {
     setIsSubmitting(true);
 
     try {
+      // Check rate limit before submitting
+      const rateLimitResponse = await supabase.functions.invoke('check-rate-limit', {
+        body: { endpoint: 'leads-submit' }
+      });
+
+      if (rateLimitResponse.error) {
+        console.error('Rate limit check failed:', rateLimitResponse.error);
+        // Continue if rate limit check fails (fail open)
+      } else if (!rateLimitResponse.data?.allowed) {
+        toast({
+          title: "Trop de demandes",
+          description: rateLimitResponse.data?.message || "Veuillez réessayer dans quelques minutes.",
+          variant: "destructive",
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
       // First, create the lead to get its ID
       const { data: leadData, error: leadError } = await supabase.from("leads").insert({
         vehicle_type: `${formData.vehicleBrand} ${formData.vehicleModel} - ${formData.vehicleType}`,
