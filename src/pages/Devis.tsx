@@ -882,7 +882,7 @@ const Devis = () => {
             </motion.div>
           )}
 
-          {/* Step 5: Confirmation */}
+          {/* Step 5: Confirmation avec récapitulatif */}
           {step === 5 && (
             <motion.div
               key="step5"
@@ -891,35 +891,212 @@ const Devis = () => {
               animate="center"
               exit="exit"
               transition={{ duration: 0.3 }}
-              className="text-center max-w-3xl mx-auto py-12"
+              className="max-w-4xl mx-auto py-8"
             >
-              <div className="w-20 h-20 gradient-cta rounded-full flex items-center justify-center mx-auto mb-8">
-                <CheckCircle className="w-10 h-10 text-primary-foreground" />
+              {/* Header de confirmation */}
+              <div className="text-center mb-10">
+                <motion.div 
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
+                  className="w-24 h-24 gradient-cta rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg"
+                >
+                  <CheckCircle className="w-12 h-12 text-primary-foreground" />
+                </motion.div>
+                
+                <h1 className="font-display font-black text-3xl md:text-4xl lg:text-5xl text-foreground mb-4 uppercase italic">
+                  Demande envoyée !
+                </h1>
+                
+                <p className="text-muted-foreground text-lg max-w-xl mx-auto">
+                  Notre équipe analyse votre demande et vous recontacte sous <span className="font-bold text-primary">24h maximum</span>.
+                </p>
               </div>
-              
-              <h1 className="font-display font-black text-4xl md:text-5xl lg:text-6xl text-foreground mb-6 uppercase">
-                Merci !
-              </h1>
-              
-              <h2 className="text-xl md:text-2xl font-semibold text-foreground mb-6">
-                Votre demande de devis a bien été prise en compte
-              </h2>
-              
-              <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
-                L'équipe Topglass prend en charge votre demande et revient vers vous 
-                pour vous proposer un professionnel qui s'occupera de votre devis. 
-                Si certaines informations manquent pour le bon suivi de votre dossier, 
-                nous vous contacterons. Et si vous avez des questions, nous sommes 
-                joignables au <a href="https://wa.me/33465849498" target="_blank" rel="noopener noreferrer" className="font-bold text-primary hover:underline">04 65 84 94 98</a> !
-              </p>
 
-              <Button
-                onClick={() => window.location.href = "/"}
-                variant="outline"
-                className="px-8"
+              {/* Récapitulatif */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="bg-white rounded-2xl shadow-xl overflow-hidden mb-8"
               >
-                Retour à l'accueil
-              </Button>
+                <div className="bg-[#2a2a2a] px-6 py-4">
+                  <h2 className="text-white font-display font-semibold text-xl">
+                    📋 Récapitulatif de votre demande
+                  </h2>
+                </div>
+
+                <div className="p-6 md:p-8 space-y-6">
+                  {/* Véhicule */}
+                  <div className="border-b border-gray-100 pb-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <Car className="w-5 h-5 text-primary" />
+                      </div>
+                      <h3 className="font-semibold text-lg text-foreground">Véhicule</h3>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pl-13">
+                      <div>
+                        <p className="text-sm text-muted-foreground">Immatriculation</p>
+                        <p className="font-semibold text-foreground">{formData.immatriculation}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground">Marque / Modèle</p>
+                        <p className="font-semibold text-foreground">{formData.vehicleBrand} {formData.vehicleModel}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-muted-foreground">Type</p>
+                        <p className="font-semibold text-foreground">{formData.vehicleType}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Service */}
+                  <div className="border-b border-gray-100 pb-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <Wrench className="w-5 h-5 text-primary" />
+                      </div>
+                      <h3 className="font-semibold text-lg text-foreground">Service demandé</h3>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-13">
+                      <div>
+                        <p className="text-sm text-muted-foreground">Type de service</p>
+                        <p className="font-semibold text-foreground">
+                          {formData.serviceType === "vitrage" ? "🔷 Vitrage" : "🔶 Carrosserie"}
+                        </p>
+                      </div>
+                      {formData.situation && (
+                        <div>
+                          <p className="text-sm text-muted-foreground">Situation</p>
+                          <p className="font-semibold text-foreground">{formData.situation}</p>
+                        </div>
+                      )}
+                    </div>
+                    {formData.description && (
+                      <div className="mt-4 pl-13">
+                        <p className="text-sm text-muted-foreground">Description des dégâts</p>
+                        <p className="font-medium text-foreground bg-gray-50 p-3 rounded-lg mt-1">
+                          {formData.description}
+                        </p>
+                      </div>
+                    )}
+                    {formData.photos.length > 0 && (
+                      <div className="mt-4 pl-13">
+                        <p className="text-sm text-muted-foreground mb-2">Photos jointes</p>
+                        <div className="flex gap-2 flex-wrap">
+                          {formData.photos.map((photo, index) => (
+                            <div key={index} className="w-16 h-16 rounded-lg bg-gray-100 flex items-center justify-center border">
+                              <ImageIcon className="w-6 h-6 text-muted-foreground" />
+                            </div>
+                          ))}
+                        </div>
+                        <p className="text-xs text-muted-foreground mt-1">{formData.photos.length} photo(s) envoyée(s)</p>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Coordonnées */}
+                  <div>
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                        <User className="w-5 h-5 text-primary" />
+                      </div>
+                      <h3 className="font-semibold text-lg text-foreground">Vos coordonnées</h3>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pl-13">
+                      <div className="flex items-center gap-2">
+                        <User className="w-4 h-4 text-muted-foreground" />
+                        <div>
+                          <p className="text-sm text-muted-foreground">Nom</p>
+                          <p className="font-semibold text-foreground">{formData.civility} {formData.firstName} {formData.lastName}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Phone className="w-4 h-4 text-muted-foreground" />
+                        <div>
+                          <p className="text-sm text-muted-foreground">Téléphone</p>
+                          <p className="font-semibold text-foreground">{formData.phone}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Mail className="w-4 h-4 text-muted-foreground" />
+                        <div>
+                          <p className="text-sm text-muted-foreground">Email</p>
+                          <p className="font-semibold text-foreground">{formData.email}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <MapPin className="w-4 h-4 text-muted-foreground" />
+                        <div>
+                          <p className="text-sm text-muted-foreground">Ville</p>
+                          <p className="font-semibold text-foreground">{formData.location}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-4 pl-13">
+                      <p className="text-sm text-muted-foreground">Préférence de contact</p>
+                      <p className="font-semibold text-foreground">
+                        {formData.contactPreference === "email" ? "📧 Par email" : "📞 Par téléphone"}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Message et actions */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                className="text-center"
+              >
+                <div className="bg-primary/5 border border-primary/20 rounded-xl p-6 mb-8">
+                  <p className="text-foreground">
+                    Des questions ? Contactez-nous directement au{" "}
+                    <a href="https://wa.me/33465849498" target="_blank" rel="noopener noreferrer" className="font-bold text-primary hover:underline">
+                      04 65 84 94 98
+                    </a>
+                  </p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button
+                    onClick={() => window.location.href = "/"}
+                    variant="outline"
+                    className="px-8"
+                  >
+                    Retour à l'accueil
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setStep(1);
+                      setFormData({
+                        immatriculation: "",
+                        vehicleBrand: "",
+                        vehicleModel: "",
+                        vehicleType: "",
+                        serviceType: "vitrage",
+                        photos: [],
+                        situation: "",
+                        description: "",
+                        insuranceName: "",
+                        civility: "",
+                        lastName: "",
+                        firstName: "",
+                        email: "",
+                        phone: "",
+                        location: "",
+                        contactPreference: "",
+                        consent: false,
+                      });
+                    }}
+                    className="px-8 bg-primary hover:bg-primary/90 text-primary-foreground"
+                  >
+                    Nouvelle demande
+                  </Button>
+                </div>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
