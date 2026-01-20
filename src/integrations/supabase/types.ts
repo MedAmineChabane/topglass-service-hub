@@ -67,6 +67,7 @@ export type Database = {
           name: string
           notes: string | null
           phone: string
+          registration_plate: string | null
           status: string | null
           vehicle_brand: string
           vehicle_type: string
@@ -81,6 +82,7 @@ export type Database = {
           name: string
           notes?: string | null
           phone: string
+          registration_plate?: string | null
           status?: string | null
           vehicle_brand: string
           vehicle_type: string
@@ -95,6 +97,7 @@ export type Database = {
           name?: string
           notes?: string | null
           phone?: string
+          registration_plate?: string | null
           status?: string | null
           vehicle_brand?: string
           vehicle_type?: string

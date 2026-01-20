@@ -265,6 +265,7 @@ const Devis = () => {
         phone: formData.phone,
         email: formData.email,
         notes: formData.description || null,
+        registration_plate: formData.immatriculation.toUpperCase(),
       }).select('id').single();
 
       if (leadError) throw leadError;
