@@ -10,6 +10,7 @@ import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import Admin from "./pages/Admin";
 import NotFound from "./pages/NotFound";
+import MascotWidget from "./components/MascotWidget";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <MascotWidget />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/devis" element={<Devis />} />
