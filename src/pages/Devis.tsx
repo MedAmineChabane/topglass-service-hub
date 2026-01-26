@@ -272,20 +272,23 @@ const Devis = () => {
 
       const leadId = leadData.id;
 
-      // Upload photos if any
+      // Upload photos via edge function (rate-limited and validated)
       if (formData.photos.length > 0) {
         const uploadedPaths: string[] = [];
 
         for (const photo of formData.photos) {
-          const fileExt = photo.name.split('.').pop();
-          const fileName = `${leadId}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+          const uploadFormData = new FormData();
+          uploadFormData.append('file', photo);
+          uploadFormData.append('leadId', leadId);
 
-          const { error: uploadError } = await supabase.storage
-            .from('lead-attachments')
-            .upload(fileName, photo);
+          const { data: uploadData, error: uploadError } = await supabase.functions.invoke('upload-lead-photo', {
+            body: uploadFormData,
+          });
 
-          if (!uploadError) {
-            uploadedPaths.push(fileName);
+          if (!uploadError && uploadData?.path) {
+            uploadedPaths.push(uploadData.path);
+          } else if (uploadData?.error) {
+            console.warn('Upload warning:', uploadData.error);
           }
         }
 
