@@ -34,6 +34,48 @@ import carIllustration from "@/assets/car-illustration.png";
 import GlassServiceIcon from "@/components/illustrations/GlassServiceIcon";
 import BodyworkServiceIcon from "@/components/illustrations/BodyworkServiceIcon";
 
+// Normalise le téléphone au format 0XXXXXXXXX
+const normalizePhone = (phone: string): string => {
+  // Supprimer tout sauf les chiffres et le +
+  let cleaned = phone.replace(/[^\d+]/g, '');
+  
+  // Convertir +33 en 0
+  if (cleaned.startsWith('+33')) {
+    cleaned = '0' + cleaned.slice(3);
+  } else if (cleaned.startsWith('33') && cleaned.length > 10) {
+    cleaned = '0' + cleaned.slice(2);
+  }
+  
+  // Garder uniquement les chiffres et limiter à 10
+  return cleaned.replace(/\D/g, '').slice(0, 10);
+};
+
+// Normalise l'immatriculation au format AA-123-BB
+const normalizeRegistration = (reg: string): string => {
+  // Supprimer tout sauf lettres et chiffres
+  const cleaned = reg.replace(/[^A-Z0-9]/gi, '').toUpperCase();
+  
+  // Si 7 caractères ou plus, formater avec tirets
+  if (cleaned.length >= 7) {
+    const letters1 = cleaned.slice(0, 2);
+    const numbers = cleaned.slice(2, 5);
+    const letters2 = cleaned.slice(5, 7);
+    return `${letters1}-${numbers}-${letters2}`;
+  }
+  
+  return cleaned.toUpperCase();
+};
+
+// Validation du format téléphone français (10 chiffres commençant par 0)
+const isValidPhone = (phone: string): boolean => {
+  return /^0[1-9][0-9]{8}$/.test(phone);
+};
+
+// Validation du format immatriculation française (AA-123-BB)
+const isValidRegistration = (reg: string): boolean => {
+  return /^[A-Z]{2}-[0-9]{3}-[A-Z]{2}$/.test(reg);
+};
+
 // Step configuration
 const steps = [
   { id: 1, label: "Votre immatriculation", icon: Car },
@@ -209,7 +251,8 @@ const Devis = () => {
   const canProceed = () => {
     switch (step) {
       case 1:
-        return formData.immatriculation.length >= 7 && 
+        const normalizedReg = normalizeRegistration(formData.immatriculation);
+        return isValidRegistration(normalizedReg) && 
                formData.vehicleBrand !== "" && 
                formData.vehicleModel !== "" && 
                formData.vehicleType !== "";
@@ -218,11 +261,12 @@ const Devis = () => {
       case 3:
         return true; // Cette étape est optionnelle
       case 4:
+        const normalizedPhone = normalizePhone(formData.phone);
         return formData.civility && 
                formData.lastName && 
                formData.firstName && 
                formData.email && 
-               formData.phone && 
+               isValidPhone(normalizedPhone) && 
                formData.location && 
                formData.contactPreference &&
                formData.consent;
@@ -255,6 +299,31 @@ const Devis = () => {
         return;
       }
 
+      // Normalize data before submission
+      const normalizedPhone = normalizePhone(formData.phone);
+      const normalizedRegistration = normalizeRegistration(formData.immatriculation);
+
+      // Final validation check
+      if (!isValidPhone(normalizedPhone)) {
+        toast({
+          title: "Numéro de téléphone invalide",
+          description: "Le numéro doit être au format français (10 chiffres commençant par 0)",
+          variant: "destructive",
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
+      if (!isValidRegistration(normalizedRegistration)) {
+        toast({
+          title: "Immatriculation invalide",
+          description: "L'immatriculation doit être au format AA-123-BB",
+          variant: "destructive",
+        });
+        setIsSubmitting(false);
+        return;
+      }
+
       // First, create the lead to get its ID
       const { data: leadData, error: leadError } = await supabase.from("leads").insert({
         vehicle_type: `${formData.vehicleBrand} ${formData.vehicleModel} - ${formData.vehicleType}`,
@@ -262,10 +331,10 @@ const Devis = () => {
         vehicle_brand: formData.vehicleBrand,
         location: formData.location,
         name: `${formData.civility} ${formData.firstName} ${formData.lastName}`,
-        phone: formData.phone,
+        phone: normalizedPhone,
         email: formData.email,
         notes: formData.description || null,
-        registration_plate: formData.immatriculation.toUpperCase(),
+        registration_plate: normalizedRegistration,
       }).select('id').single();
 
       if (leadError) throw leadError;
@@ -409,7 +478,17 @@ const Devis = () => {
                       </div>
                       <Input
                         value={formData.immatriculation}
-                        onChange={(e) => updateFormData("immatriculation", e.target.value.toUpperCase())}
+                        onChange={(e) => {
+                          const value = e.target.value.toUpperCase().replace(/[^A-Z0-9-]/g, '');
+                          updateFormData("immatriculation", value);
+                        }}
+                        onBlur={() => {
+                          // Auto-format on blur
+                          const normalized = normalizeRegistration(formData.immatriculation);
+                          if (normalized !== formData.immatriculation) {
+                            updateFormData("immatriculation", normalized);
+                          }
+                        }}
                         placeholder="AB-123-CD"
                         className="border-0 text-center text-2xl font-bold tracking-widest flex-1 h-16 focus-visible:ring-0 bg-transparent"
                         maxLength={9}
@@ -810,15 +889,33 @@ const Devis = () => {
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="relative">
-                    <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-                    <Input
-                      type="tel"
-                      value={formData.phone}
-                      onChange={(e) => updateFormData("phone", e.target.value)}
-                      placeholder="TÉLÉPHONE"
-                      className="pl-10 bg-white h-12 border-0 border-b-2 border-gray-200 rounded-none"
-                    />
+                  <div className="space-y-1">
+                    <div className="relative">
+                      <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <Input
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(e) => updateFormData("phone", e.target.value)}
+                        onBlur={() => {
+                          // Auto-normalize on blur
+                          const normalized = normalizePhone(formData.phone);
+                          if (normalized !== formData.phone) {
+                            updateFormData("phone", normalized);
+                          }
+                        }}
+                        placeholder="TÉLÉPHONE"
+                        className={`pl-10 bg-white h-12 border-0 border-b-2 rounded-none ${
+                          formData.phone && !isValidPhone(normalizePhone(formData.phone))
+                            ? "border-destructive"
+                            : "border-gray-200"
+                        }`}
+                      />
+                    </div>
+                    {formData.phone && !isValidPhone(normalizePhone(formData.phone)) && (
+                      <p className="text-xs text-destructive">
+                        Format attendu : 06 12 34 56 78
+                      </p>
+                    )}
                   </div>
                   <div className="relative">
                     <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10 pointer-events-none" />
