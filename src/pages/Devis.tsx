@@ -324,8 +324,15 @@ const Devis = () => {
         return;
       }
 
-      // First, create the lead to get its ID
-      const { data: leadData, error: leadError } = await supabase.from("leads").insert({
+      // IMPORTANT (root cause fix):
+      // Ne pas faire `.select('id')` après l'insert: cela force un RETURNING/SELECT
+      // qui est bloqué par RLS pour les utilisateurs anonymes.
+      // On génère donc l'id côté client et on insère sans SELECT.
+      const leadId = crypto.randomUUID();
+
+      // Create the lead (no select)
+      const { error: leadError } = await supabase.from("leads").insert({
+        id: leadId,
         vehicle_type: `${formData.vehicleBrand} ${formData.vehicleModel} - ${formData.vehicleType}`,
         glass_type: formData.serviceType,
         vehicle_brand: formData.vehicleBrand,
@@ -335,16 +342,12 @@ const Devis = () => {
         email: formData.email,
         notes: formData.description || null,
         registration_plate: normalizedRegistration,
-      }).select('id').single();
+      });
 
       if (leadError) throw leadError;
 
-      const leadId = leadData.id;
-
       // Upload photos via edge function (rate-limited and validated)
       if (formData.photos.length > 0) {
-        const uploadedPaths: string[] = [];
-
         for (const photo of formData.photos) {
           const uploadFormData = new FormData();
           uploadFormData.append('file', photo);
@@ -354,24 +357,17 @@ const Devis = () => {
             body: uploadFormData,
           });
 
-          if (!uploadError && uploadData?.path) {
-            uploadedPaths.push(uploadData.path);
+          if (uploadError) {
+            console.warn('Upload warning:', uploadError);
           } else if (uploadData?.error) {
             console.warn('Upload warning:', uploadData.error);
           }
-        }
-
-        // Update lead with attachment paths
-        if (uploadedPaths.length > 0) {
-          await supabase
-            .from('leads')
-            .update({ attachments: uploadedPaths })
-            .eq('id', leadId);
         }
       }
 
       setStep(5);
     } catch (error) {
+      console.error('Lead submission failed:', error);
       toast({
         title: "Erreur",
         description: "Une erreur est survenue. Veuillez réessayer.",
