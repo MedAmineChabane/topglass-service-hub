@@ -58,13 +58,23 @@ const MascotWidget = () => {
             >
               {/* Header */}
               <div className="bg-gradient-to-r from-primary to-primary/80 px-5 py-3 flex items-center justify-between">
-                <span className="text-white font-bold text-sm">Comment puis-je vous aider ?</span>
+                <span className="text-white font-bold text-sm">Assistance Topglass</span>
                 <button 
                   onClick={() => setIsOpen(false)}
                   className="text-white/80 hover:text-white transition-colors"
                 >
                   <X className="w-4 h-4" />
                 </button>
+              </div>
+
+              {/* Welcome message */}
+              <div className="px-5 py-3 bg-primary/5 border-b border-border">
+                <p className="text-sm text-foreground">
+                  👋 <span className="font-semibold">Bienvenue chez Topglass !</span>
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Votre assistant pour vos demandes de vitrage, litiges ou questions.
+                </p>
               </div>
 
               {/* Options */}
