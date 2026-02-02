@@ -18,9 +18,7 @@ const Footer = ({
             <h3 className="font-display font-bold text-2xl md:text-3xl text-secondary-foreground mb-4">
               Besoin d'une intervention rapide ?
             </h3>
-            <p className="text-secondary-foreground/80 mb-8 max-w-xl mx-auto">
-              Nos techniciens certifiés interviennent partout en France sous 48h.
-            </p>
+            <p className="text-secondary-foreground/80 mb-8 max-w-xl mx-auto">Nos techniciens certifiés interviennent partout à Marseille et en région Paca 48h.</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button onClick={goToDevis} size="lg" className="gradient-cta text-primary-foreground font-bold shadow-cta">
                 Demander un devis gratuit
