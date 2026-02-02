@@ -67,27 +67,12 @@ const Hero = () => {
             Nos techniciens certifiés se déplacent chez vous, au bureau ou sur site.
           </motion.p>
 
-          {/* Loan Vehicle & Gifts Banner */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.25 }}
-            className="flex flex-wrap justify-center gap-4 mb-10"
-          >
-            <div className="bg-secondary/90 backdrop-blur-sm text-white px-5 py-3 rounded-xl shadow-lg border border-white/20">
-              <span className="font-bold text-sm md:text-base">🚗 VÉHICULE DE PRÊT TOPGLASS</span>
-            </div>
-            <div className="bg-primary/90 backdrop-blur-sm text-white px-5 py-3 rounded-xl shadow-lg border border-white/20">
-              <span className="font-bold text-sm md:text-base">🎁 CADEAUX & REMISES EXCLUSIFS</span>
-            </div>
-          </motion.div>
-
           {/* CTA Button */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="mb-12"
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="mb-10"
           >
             <Button
               onClick={goToDevis}
@@ -96,6 +81,21 @@ const Hero = () => {
             >
               Réserver mon intervention
             </Button>
+          </motion.div>
+
+          {/* Loan Vehicle & Gifts Banner */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="flex flex-wrap justify-center gap-4 mb-12"
+          >
+            <div className="bg-secondary/90 backdrop-blur-sm text-white px-5 py-3 rounded-xl shadow-lg border border-white/20">
+              <span className="font-bold text-sm md:text-base">🚗 VÉHICULE DE PRÊT TOPGLASS</span>
+            </div>
+            <div className="bg-primary/90 backdrop-blur-sm text-white px-5 py-3 rounded-xl shadow-lg border border-white/20">
+              <span className="font-bold text-sm md:text-base">🎁 CADEAUX & REMISES EXCLUSIFS</span>
+            </div>
           </motion.div>
 
           {/* Features */}
