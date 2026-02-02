@@ -14,7 +14,7 @@ const Hero = () => {
   const features = [
     { icon: Shield, text: "Agréé toutes assurances" },
     { icon: Clock, text: "Intervention rapide" },
-    { icon: MapPin, text: "Partout en France" },
+    { icon: MapPin, text: "France & Région PACA" },
   ];
 
   return (
@@ -52,9 +52,8 @@ const Hero = () => {
           >
             <span className="text-white">Top</span>
             <span className="text-sky-500">glass</span>
-            <span className="text-white"> : Remplacement Pare-Brise à{" "}</span>
-            <span className="text-sky-500">Marseille</span>
-            <span className="text-white"> & Partout en France</span>
+            <span className="text-white"> : Remplacement Pare-Brise en{" "}</span>
+            <span className="text-sky-500">France & Région PACA</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -62,11 +61,26 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-lg md:text-xl text-white/90 mb-10 max-w-2xl mx-auto drop-shadow-md"
+            className="text-lg md:text-xl text-white/90 mb-6 max-w-2xl mx-auto drop-shadow-md"
           >
-            Intervention rapide, franchise remboursée, zéro avance de frais. 
+            Intervention rapide, franchise remboursée jusqu'à 150€, zéro avance de frais. 
             Nos techniciens certifiés se déplacent chez vous.
           </motion.p>
+
+          {/* Loan Vehicle & Gifts Banner */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="flex flex-wrap justify-center gap-4 mb-10"
+          >
+            <div className="bg-secondary/90 backdrop-blur-sm text-white px-5 py-3 rounded-xl shadow-lg border border-white/20">
+              <span className="font-bold text-sm md:text-base">🚗 VÉHICULE DE PRÊT TOPGLASS</span>
+            </div>
+            <div className="bg-primary/90 backdrop-blur-sm text-white px-5 py-3 rounded-xl shadow-lg border border-white/20">
+              <span className="font-bold text-sm md:text-base">🎁 CADEAUX & REMISES EXCLUSIFS</span>
+            </div>
+          </motion.div>
 
           {/* CTA Button */}
           <motion.div

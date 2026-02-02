@@ -122,7 +122,7 @@ const Footer = ({ hideCta = false }: FooterProps) => {
               </li>
               <li className="flex items-start gap-3">
                 <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
-                <span>45 Boulevard Baille<br />13006 Marseille</span>
+                <span>2 Impasse Jolie Manon<br />13003 Marseille</span>
               </li>
             </ul>
           </div>

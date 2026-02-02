@@ -67,14 +67,14 @@ const Header = ({ minimal = false }: HeaderProps) => {
               src="/assets/topglass-logo.png" 
               alt="Topglass - Remplacement pare-brise" 
               animate={{
-                width: isScrolled ? 48 : 80,
-                height: isScrolled ? 48 : 80,
+                width: isScrolled ? 56 : 96,
+                height: isScrolled ? 56 : 96,
               }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="md:w-28 md:h-28 rounded-full object-cover border-2 border-white/80 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]"
+              className="md:w-32 md:h-32 rounded-full object-cover border-2 border-white/80 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.5)]"
               style={{
-                width: isScrolled ? 48 : 80,
-                height: isScrolled ? 48 : 80,
+                width: isScrolled ? 56 : 96,
+                height: isScrolled ? 56 : 96,
               }}
             />
           </a>

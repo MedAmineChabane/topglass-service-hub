@@ -57,8 +57,8 @@ const Contact = () => {
                     <MapPin className="w-6 h-6 text-foreground" />
                   </div>
                   <div className="text-left">
-                    <p className="text-sm text-muted-foreground">Zone d'intervention</p>
-                    <p className="text-xl font-bold text-foreground">Marseille et environs</p>
+                    <p className="text-sm text-muted-foreground">Adresse</p>
+                    <p className="text-lg font-bold text-foreground">2 Impasse Jolie Manon, 13003 Marseille</p>
                   </div>
                 </div>
                 
