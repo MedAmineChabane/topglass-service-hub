@@ -34,6 +34,22 @@ import carIllustration from "@/assets/car-illustration.png";
 import GlassServiceIcon from "@/components/illustrations/GlassServiceIcon";
 import BodyworkServiceIcon from "@/components/illustrations/BodyworkServiceIcon";
 
+// UUID v4 helper (fallback if crypto.randomUUID isn't available in some browsers)
+const generateUUID = (): string => {
+  // Modern browsers
+  if (globalThis.crypto && "randomUUID" in globalThis.crypto) {
+    return (globalThis.crypto as Crypto).randomUUID();
+  }
+
+  // Fallback v4 using getRandomValues
+  const bytes = new Uint8Array(16);
+  globalThis.crypto.getRandomValues(bytes);
+  bytes[6] = (bytes[6] & 0x0f) | 0x40; // version 4
+  bytes[8] = (bytes[8] & 0x3f) | 0x80; // variant 10
+  const hex = Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
+  return `${hex.slice(0, 8)}-${hex.slice(8, 12)}-${hex.slice(12, 16)}-${hex.slice(16, 20)}-${hex.slice(20)}`;
+};
+
 // Normalise le téléphone au format 0XXXXXXXXX
 const normalizePhone = (phone: string): string => {
   // Supprimer tout sauf les chiffres et le +
@@ -328,7 +344,7 @@ const Devis = () => {
       // Ne pas faire `.select('id')` après l'insert: cela force un RETURNING/SELECT
       // qui est bloqué par RLS pour les utilisateurs anonymes.
       // On génère donc l'id côté client et on insère sans SELECT.
-      const leadId = crypto.randomUUID();
+      const leadId = generateUUID();
 
       // Create the lead (no select)
       const { error: leadError } = await supabase.from("leads").insert({
@@ -368,9 +384,22 @@ const Devis = () => {
       setStep(5);
     } catch (error) {
       console.error('Lead submission failed:', error);
+
+      const err = error as any;
+      const message =
+        typeof err?.message === "string"
+          ? err.message
+          : typeof err?.error_description === "string"
+            ? err.error_description
+            : "Une erreur est survenue. Veuillez réessayer.";
+      const details = typeof err?.details === "string" ? err.details : undefined;
+      const code = typeof err?.code === "string" ? err.code : undefined;
+
       toast({
         title: "Erreur",
-        description: "Une erreur est survenue. Veuillez réessayer.",
+        description: [message, code ? `Code: ${code}` : null, details ? `Détails: ${details}` : null]
+          .filter(Boolean)
+          .join(" — "),
         variant: "destructive",
       });
     } finally {
