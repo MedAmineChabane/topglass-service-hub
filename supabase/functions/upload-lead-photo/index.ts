@@ -2,7 +2,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
 };
 
 // Rate limit configuration (same as lead submission)
@@ -14,7 +14,7 @@ const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
 Deno.serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    return new Response(null, { headers: corsHeaders });
+    return new Response('ok', { headers: corsHeaders });
   }
 
   try {
@@ -83,6 +83,28 @@ Deno.serve(async (req) => {
       );
     }
 
+    // Ensure lead exists (and read current attachments)
+    const { data: leadRow, error: leadSelectError } = await supabase
+      .from('leads')
+      .select('id, attachments')
+      .eq('id', leadId)
+      .maybeSingle();
+
+    if (leadSelectError) {
+      console.error('Lead lookup error:', leadSelectError);
+      return new Response(
+        JSON.stringify({ error: 'Erreur lors de la vérification du dossier.' }),
+        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    if (!leadRow?.id) {
+      return new Response(
+        JSON.stringify({ error: 'Devis introuvable.' }),
+        { status: 404, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
     // Validate file size
     if (file.size > MAX_FILE_SIZE) {
       return new Response(
@@ -131,6 +153,22 @@ Deno.serve(async (req) => {
         JSON.stringify({ error: 'Échec de l\'upload du fichier.' }),
         { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
+    }
+
+    // Append the uploaded path into leads.attachments (service role, bypasses RLS)
+    const current = Array.isArray(leadRow.attachments) ? leadRow.attachments : [];
+    const nextAttachments = current.includes(secureFileName)
+      ? current
+      : [...current, secureFileName];
+
+    const { error: leadUpdateError } = await supabase
+      .from('leads')
+      .update({ attachments: nextAttachments })
+      .eq('id', leadId);
+
+    if (leadUpdateError) {
+      console.error('Lead attachments update error:', leadUpdateError);
+      // On ne bloque pas l'utilisateur: l'upload est OK, mais l'attachement n'a pas pu être enregistré.
     }
 
     // Record rate limit entry
