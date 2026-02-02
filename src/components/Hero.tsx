@@ -64,7 +64,7 @@ const Hero = () => {
             className="text-lg md:text-xl text-white/90 mb-6 max-w-2xl mx-auto drop-shadow-md"
           >
             Intervention rapide, franchise remboursée jusqu'à 150€, zéro avance de frais. 
-            Nos techniciens certifiés se déplacent chez vous.
+            Nos techniciens certifiés se déplacent chez vous, au bureau ou sur site.
           </motion.p>
 
           {/* Loan Vehicle & Gifts Banner */}
