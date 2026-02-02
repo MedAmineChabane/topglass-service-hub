@@ -16,7 +16,7 @@ const Hero = () => {
     text: "Intervention rapide"
   }, {
     icon: MapPin,
-    text: "France & Région PACA"
+    text: "Marseille & Région PACA"
   }];
   return <section className="relative min-h-screen flex items-center pt-40 md:pt-44 overflow-hidden">
       {/* Background Image */}
