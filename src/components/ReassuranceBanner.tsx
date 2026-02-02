@@ -15,7 +15,7 @@ const reassuranceItems = [
   {
     icon: MapPin,
     title: "Déplacement Gratuit",
-    description: "Intervention à domicile ou au bureau",
+    description: "Intervention sur site, à domicile ou au bureau",
   },
   {
     icon: Shield,
