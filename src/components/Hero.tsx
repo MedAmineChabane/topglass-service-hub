@@ -50,8 +50,8 @@ const Hero = () => {
               textShadow: '2px 2px 0 rgba(0,0,0,0.8), -2px -2px 0 rgba(0,0,0,0.8), 2px -2px 0 rgba(0,0,0,0.8), -2px 2px 0 rgba(0,0,0,0.8), 0 4px 8px rgba(0,0,0,0.5)'
             }}
           >
-            <span className="text-white">Top</span>
-            <span className="text-sky-500">glass</span>
+            <span className="text-white">TOP</span>
+            <span className="text-sky-500">GLASS</span>
             <span className="text-white"> : Remplacement Pare-Brise en{" "}</span>
             <span className="text-sky-500">France & Région PACA</span>
           </motion.h1>
