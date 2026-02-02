@@ -58,7 +58,7 @@ const Hero = () => {
             <span className="text-white">TOP</span>
             <span className="text-sky-500">GLASS</span>
             <span className="text-white"> : Remplacement Pare-Brise en{" "}</span>
-            <span className="text-sky-500">France & Région PACA.</span>
+            <span className="text-sky-500">Marseille &  en Région PACA.</span>
           </motion.h1>
 
           {/* Subtitle */}
