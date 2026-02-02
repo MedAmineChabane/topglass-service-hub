@@ -714,7 +714,7 @@ const Devis = () => {
                       <span className="text-sm text-gray-500">Ajouter</span>
                       <input
                         type="file"
-                        accept="image/*"
+                        accept=".jpg,.jpeg,.png,.gif,.webp,.heic,.heif,image/jpeg,image/png,image/gif,image/webp,image/heic,image/heif"
                         multiple
                         onChange={handlePhotoUpload}
                         className="hidden"
