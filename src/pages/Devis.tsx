@@ -381,6 +381,31 @@ const Devis = () => {
         }
       }
 
+      // Send email notification to TopGlass team
+      try {
+        const { error: notificationError } = await supabase.functions.invoke('send-lead-notification', {
+          body: {
+            leadId,
+            name: `${formData.civility} ${formData.firstName} ${formData.lastName}`,
+            email: formData.email,
+            phone: normalizedPhone,
+            vehicleBrand: formData.vehicleBrand,
+            vehicleModel: formData.vehicleModel,
+            vehicleType: formData.vehicleType,
+            registrationPlate: normalizedRegistration,
+            location: formData.location,
+            serviceType: formData.serviceType,
+            description: formData.description || undefined,
+          },
+        });
+
+        if (notificationError) {
+          console.warn('Email notification warning:', notificationError);
+        }
+      } catch (notifErr) {
+        console.warn('Email notification failed (non-blocking):', notifErr);
+      }
+
       setStep(5);
     } catch (error) {
       console.error('Lead submission failed:', error);
