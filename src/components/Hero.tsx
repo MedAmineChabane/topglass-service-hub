@@ -106,7 +106,7 @@ const Hero = () => {
             <div className="bg-secondary/90 backdrop-blur-sm text-white px-5 py-3 rounded-xl shadow-lg border border-white/20">
               <span className="font-bold text-sm md:text-base">🚗 VÉHICULE DE PRÊT TOPGLASS</span>
             </div>
-            <div className="bg-primary/90 backdrop-blur-sm text-white px-5 py-3 rounded-xl shadow-lg border border-white/20">
+            <div className="backdrop-blur-sm text-white px-5 py-3 rounded-xl shadow-lg border border-white/20 bg-secondary">
               <span className="font-bold text-sm md:text-base">🎁 CADEAUX & REMISES EXCLUSIFS</span>
             </div>
           </motion.div>
