@@ -3,7 +3,6 @@ import { Menu, X, Phone, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import logoTransparent from "@/assets/topglass-logo-transparent.png";
 
 const services = [
   { name: "Remplacement pare-brise", href: "/devis" },
@@ -43,9 +42,9 @@ const Header = ({ minimal = false }: HeaderProps) => {
       <header className="fixed top-4 left-4 z-50">
         <a href="/" className="flex items-center">
           <img 
-            src={logoTransparent} 
+            src="/assets/topglass-logo.png" 
             alt="Topglass - Remplacement pare-brise" 
-            className="h-16 w-16 md:h-20 md:w-20 object-contain transition-all duration-300 hover:scale-105"
+            className="h-16 w-16 md:h-20 md:w-20 rounded-full object-cover shadow-lg transition-all duration-300 hover:scale-105"
           />
         </a>
       </header>
@@ -65,14 +64,14 @@ const Header = ({ minimal = false }: HeaderProps) => {
           {/* Logo */}
           <a href="/" className="flex items-center">
             <motion.img 
-              src={logoTransparent} 
+              src="/assets/topglass-logo.png" 
               alt="Topglass - Remplacement pare-brise" 
               animate={{
                 width: isScrolled ? 56 : 96,
                 height: isScrolled ? 56 : 96,
               }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="md:w-32 md:h-32 object-contain hover:scale-105"
+              className="md:w-32 md:h-32 rounded-full object-cover shadow-lg hover:scale-105"
               style={{
                 width: isScrolled ? 56 : 96,
                 height: isScrolled ? 56 : 96,
