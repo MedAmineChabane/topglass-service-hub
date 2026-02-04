@@ -205,7 +205,7 @@ Voir le détail dans l'admin: ${adminUrl}
     console.log("Sending email to topglassfrance@gmail.com and contact@topglassfrance.com");
 
     const { data: emailResult, error: emailError } = await resend.emails.send({
-      from: "TopGlass France <onboarding@resend.dev>",
+      from: "TopGlass France <noreply@topglassfrance.com>",
       to: ["topglassfrance@gmail.com", "contact@topglassfrance.com"],
       subject: `🚗 Nouvelle demande de devis - ${name} - ${serviceLabel}`,
       html: emailHtml,
