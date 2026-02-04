@@ -136,9 +136,7 @@ const Header = ({ minimal = false }: HeaderProps) => {
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
             <a 
-              href="https://wa.me/33465849498"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="tel:0465849498"
               className="flex items-center gap-2 text-secondary animate-phone-pulse hover:text-primary transition-colors"
             >
               <Phone className="w-4 h-4" />
@@ -195,9 +193,7 @@ const Header = ({ minimal = false }: HeaderProps) => {
                 Contact
               </a>
               <a 
-                href="https://wa.me/33465849498"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="tel:0465849498"
                 className="flex items-center gap-2 text-secondary py-2 animate-phone-pulse"
               >
                 <Phone className="w-4 h-4" />
