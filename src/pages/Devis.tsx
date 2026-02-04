@@ -1223,7 +1223,7 @@ const Devis = () => {
                 <div className="bg-primary/5 border border-primary/20 rounded-xl p-6 mb-8">
                   <p className="text-foreground">
                     Des questions ? Contactez-nous directement au{" "}
-                    <a href="https://wa.me/33465849498" target="_blank" rel="noopener noreferrer" className="font-bold text-primary hover:underline">
+                    <a href="tel:0465849498" className="font-bold text-primary hover:underline">
                       04 65 84 94 98
                     </a>
                   </p>

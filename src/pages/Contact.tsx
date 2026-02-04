@@ -21,18 +21,16 @@ const Contact = () => {
             
             <div className="bg-card rounded-2xl p-8 md:p-12 shadow-xl border border-border/50">
               <div className="space-y-8">
-                {/* Phone - WhatsApp */}
+                {/* Phone */}
                 <a 
-                  href="https://wa.me/33465849498"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="tel:0465849498"
                   className="flex items-center justify-center gap-4 p-4 rounded-xl bg-primary/10 hover:bg-primary/20 transition-colors group"
                 >
                   <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center group-hover:scale-110 transition-transform">
                     <Phone className="w-6 h-6 text-primary-foreground" />
                   </div>
                   <div className="text-left">
-                    <p className="text-sm text-muted-foreground">Téléphone / WhatsApp</p>
+                    <p className="text-sm text-muted-foreground">Téléphone</p>
                     <p className="text-xl font-bold text-foreground">04 65 84 94 98</p>
                   </div>
                 </a>

@@ -23,7 +23,7 @@ const Footer = ({
               <Button onClick={goToDevis} size="lg" className="gradient-cta text-primary-foreground font-bold shadow-cta">
                 Demander un devis gratuit
               </Button>
-              <a href="https://wa.me/33465849498" target="_blank" rel="noopener noreferrer">
+              <a href="tel:0465849498">
                 <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold">
                   <Phone className="w-4 h-4 mr-2" />
                   04 65 84 94 98
@@ -85,7 +85,7 @@ const Footer = ({
             <h4 className="font-display font-semibold text-lg mb-4">Contact</h4>
             <ul className="space-y-4 text-background/70">
               <li>
-                <a href="https://wa.me/33465849498" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-primary transition-colors">
+                <a href="tel:0465849498" className="flex items-center gap-3 hover:text-primary transition-colors">
                   <Phone className="w-5 h-5 text-primary" />
                   <span>04 65 84 94 98</span>
                 </a>
