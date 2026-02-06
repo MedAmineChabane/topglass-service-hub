@@ -25,6 +25,7 @@ import {
   Mail,
   MapPin,
   Upload,
+  Info,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
@@ -33,6 +34,7 @@ import Footer from "@/components/Footer";
 import carIllustration from "@/assets/car-illustration.png";
 import GlassServiceIcon from "@/components/illustrations/GlassServiceIcon";
 import BodyworkServiceIcon from "@/components/illustrations/BodyworkServiceIcon";
+import { GlassSelector, type GlassZone, glassZones } from "@/components/GlassSelector";
 
 // UUID v4 helper (fallback if crypto.randomUUID isn't available in some browsers)
 const generateUUID = (): string => {
@@ -205,8 +207,10 @@ const Devis = () => {
     vehicleBrand: "",
     vehicleModel: "",
     vehicleType: "",
+    vin: "", // Numéro VIN (optionnel)
     // Step 2 - Besoin
     serviceType: "vitrage" as "carrosserie" | "vitrage",
+    selectedGlassZones: [] as GlassZone[], // Zones de vitrage sélectionnées
     // Step 3 - Dégâts
     photos: [] as File[],
     situation: "",
@@ -346,6 +350,14 @@ const Devis = () => {
       // On génère donc l'id côté client et on insère sans SELECT.
       const leadId = generateUUID();
 
+      // Build notes with glass zones and VIN if provided
+      const glassZonesText = formData.selectedGlassZones.length > 0
+        ? `Zones de vitrage: ${formData.selectedGlassZones.map(z => glassZones.find(gz => gz.id === z)?.label).join(', ')}`
+        : '';
+      const vinText = formData.vin ? `VIN: ${formData.vin}` : '';
+      const noteParts = [formData.description, glassZonesText, vinText].filter(Boolean);
+      const fullNotes = noteParts.length > 0 ? noteParts.join(' | ') : null;
+
       // Create the lead (no select)
       const { error: leadError } = await supabase.from("leads").insert({
         id: leadId,
@@ -356,7 +368,7 @@ const Devis = () => {
         name: `${formData.civility} ${formData.firstName} ${formData.lastName}`,
         phone: normalizedPhone,
         email: formData.email,
-        notes: formData.description || null,
+        notes: fullNotes,
         registration_plate: normalizedRegistration,
       });
 
@@ -393,8 +405,12 @@ const Devis = () => {
             vehicleModel: formData.vehicleModel,
             vehicleType: formData.vehicleType,
             registrationPlate: normalizedRegistration,
+            vin: formData.vin || undefined,
             location: formData.location,
             serviceType: formData.serviceType,
+            selectedGlassZones: formData.selectedGlassZones.length > 0 
+              ? formData.selectedGlassZones.map(z => glassZones.find(gz => gz.id === z)?.label).filter(Boolean)
+              : undefined,
             description: formData.description || undefined,
           },
         });
@@ -642,6 +658,27 @@ const Devis = () => {
                       </SelectContent>
                     </Select>
                   </div>
+
+                  {/* VIN Field - Optional */}
+                  <div>
+                    <label className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
+                      Numéro VIN (Case E carte grise)
+                      <span className="text-xs text-muted-foreground/70 italic">(optionnel)</span>
+                    </label>
+                    <div className="relative">
+                      <Info className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                      <Input
+                        value={formData.vin}
+                        onChange={(e) => updateFormData("vin", e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''))}
+                        placeholder="Ex: VF1RFB00123456789"
+                        className="pl-10 font-mono text-sm"
+                        maxLength={17}
+                      />
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Le VIN contient 17 caractères et permet d'identifier précisément votre véhicule.
+                    </p>
+                  </div>
                 </div>
 
                 <Button
@@ -713,6 +750,24 @@ const Devis = () => {
                     </button>
                   </div>
                 </div>
+
+                {/* Glass Zone Selector - Only for vitrage service */}
+                {formData.serviceType === "vitrage" && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="bg-white rounded-2xl p-6 shadow-md border border-gray-100"
+                  >
+                    <h3 className="font-semibold text-lg mb-4 text-center">
+                      Quels vitrages sont concernés ?
+                    </h3>
+                    <GlassSelector
+                      selectedZones={formData.selectedGlassZones}
+                      onSelectionChange={(zones) => updateFormData("selectedGlassZones", zones)}
+                    />
+                  </motion.div>
+                )}
 
                 <Button
                   onClick={nextStep}
@@ -1104,7 +1159,7 @@ const Devis = () => {
                       </div>
                       <h3 className="font-semibold text-lg text-foreground">Véhicule</h3>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pl-13">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pl-13">
                       <div>
                         <p className="text-sm text-muted-foreground">Immatriculation</p>
                         <p className="font-semibold text-foreground">{formData.immatriculation}</p>
@@ -1117,6 +1172,12 @@ const Devis = () => {
                         <p className="text-sm text-muted-foreground">Type</p>
                         <p className="font-semibold text-foreground">{formData.vehicleType}</p>
                       </div>
+                      {formData.vin && (
+                        <div>
+                          <p className="text-sm text-muted-foreground">Numéro VIN</p>
+                          <p className="font-semibold text-foreground font-mono text-sm">{formData.vin}</p>
+                        </div>
+                      )}
                     </div>
                   </div>
 
@@ -1142,6 +1203,25 @@ const Devis = () => {
                         </div>
                       )}
                     </div>
+                    {/* Selected glass zones */}
+                    {formData.serviceType === "vitrage" && formData.selectedGlassZones.length > 0 && (
+                      <div className="mt-4 pl-13">
+                        <p className="text-sm text-muted-foreground mb-2">Zones de vitrage concernées</p>
+                        <div className="flex flex-wrap gap-2">
+                          {formData.selectedGlassZones.map((zone) => {
+                            const config = glassZones.find((z) => z.id === zone);
+                            return (
+                              <span
+                                key={zone}
+                                className="inline-flex items-center bg-secondary/10 text-secondary text-sm px-3 py-1 rounded-full font-medium"
+                              >
+                                {config?.label}
+                              </span>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
                     {formData.description && (
                       <div className="mt-4 pl-13">
                         <p className="text-sm text-muted-foreground">Description des dégâts</p>
@@ -1245,7 +1325,9 @@ const Devis = () => {
                         vehicleBrand: "",
                         vehicleModel: "",
                         vehicleType: "",
+                        vin: "",
                         serviceType: "vitrage",
+                        selectedGlassZones: [],
                         photos: [],
                         situation: "",
                         description: "",
