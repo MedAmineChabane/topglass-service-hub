@@ -41,6 +41,7 @@ interface Lead {
   status: string;
   attachments?: string[];
   notes?: string;
+  registration_plate?: string;
 }
 
 interface LeadDetailDialogProps {
@@ -63,6 +64,7 @@ const LeadDetailDialog = ({ lead, open, onOpenChange, onLeadUpdated }: LeadDetai
   const [attachments, setAttachments] = useState<string[]>(lead?.attachments || []);
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [signedUrls, setSignedUrls] = useState<Record<string, string>>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
 
@@ -72,6 +74,27 @@ const LeadDetailDialog = ({ lead, open, onOpenChange, onLeadUpdated }: LeadDetai
       setAttachments(lead.attachments || []);
     }
   }, [lead]);
+
+  // Generate signed URLs for attachments (bucket is private)
+  React.useEffect(() => {
+    const generateSignedUrls = async () => {
+      if (attachments.length === 0) return;
+      
+      const urls: Record<string, string> = {};
+      for (const filePath of attachments) {
+        const { data, error } = await supabase.storage
+          .from('lead-attachments')
+          .createSignedUrl(filePath, 3600); // 1 hour expiry
+        
+        if (data && !error) {
+          urls[filePath] = data.signedUrl;
+        }
+      }
+      setSignedUrls(urls);
+    };
+    
+    generateSignedUrls();
+  }, [attachments]);
 
   if (!lead) return null;
 
@@ -232,8 +255,7 @@ const LeadDetailDialog = ({ lead, open, onOpenChange, onLeadUpdated }: LeadDetai
   };
 
   const getImageUrl = (filePath: string) => {
-    const { data } = supabase.storage.from('lead-attachments').getPublicUrl(filePath);
-    return data.publicUrl;
+    return signedUrls[filePath] || '';
   };
 
   return (
@@ -320,6 +342,15 @@ const LeadDetailDialog = ({ lead, open, onOpenChange, onLeadUpdated }: LeadDetai
                   <p className="font-medium">{lead.vehicle_type}</p>
                 </div>
               </div>
+              {lead.registration_plate && (
+                <div className="flex items-center gap-3">
+                  <FileText className="h-5 w-5 text-primary" />
+                  <div>
+                    <p className="text-xs text-muted-foreground">Immatriculation</p>
+                    <p className="font-medium font-mono bg-primary/10 px-2 py-0.5 rounded inline-block">{lead.registration_plate}</p>
+                  </div>
+                </div>
+              )}
               <div className="flex items-center gap-3">
                 <FileText className="h-5 w-5 text-primary" />
                 <div>
