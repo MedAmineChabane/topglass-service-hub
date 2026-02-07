@@ -123,16 +123,20 @@ const GlassSelector = ({ selectedZones, onSelectionChange }: GlassSelectorProps)
           💡
         </motion.button>
 
-        {/* Pare-brise (Front windshield) */}
+        {/* Pare-brise (Front windshield) - centered with left:50% + translateX(-50%) */}
         <motion.button
           onClick={() => toggleZone("pare-brise")}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={cn(
-            "absolute top-[17%] left-1/2 -translate-x-1/2 w-[58%] h-[11%] transition-all duration-200 border-2 flex items-center justify-center text-xs font-semibold z-10",
+            "absolute top-[17%] w-[58%] h-[11%] transition-all duration-200 border-2 flex items-center justify-center text-xs font-semibold z-10",
             getZoneStyle("pare-brise")
           )}
-          style={{ borderRadius: "50% 50% 35% 35% / 80% 80% 40% 40%" }}
+          style={{ 
+            left: "50%", 
+            transform: "translateX(-50%)",
+            borderRadius: "50% 50% 35% 35% / 80% 80% 40% 40%" 
+          }}
         >
           Pare-brise
         </motion.button>
@@ -165,15 +169,16 @@ const GlassSelector = ({ selectedZones, onSelectionChange }: GlassSelectorProps)
           Av.<br />D
         </motion.button>
 
-        {/* Toit Panoramique (Panoramic roof) - repositioned to not overlap */}
+        {/* Toit Panoramique (Panoramic roof) - centered with left:50% + translateX(-50%) */}
         <motion.button
           onClick={() => toggleZone("toit-panoramique")}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={cn(
-            "absolute top-[32%] left-1/2 -translate-x-1/2 w-[42%] h-[20%] rounded-xl transition-all duration-200 border-2 flex items-center justify-center text-[10px] font-semibold z-10",
+            "absolute top-[32%] w-[42%] h-[20%] rounded-xl transition-all duration-200 border-2 flex items-center justify-center text-[10px] font-semibold z-10",
             getZoneStyle("toit-panoramique")
           )}
+          style={{ left: "50%", transform: "translateX(-50%)" }}
         >
           Toit<br />Pano.
         </motion.button>
@@ -206,16 +211,20 @@ const GlassSelector = ({ selectedZones, onSelectionChange }: GlassSelectorProps)
           Ar.<br />D
         </motion.button>
 
-        {/* Lunette Arrière (Rear windshield) */}
+        {/* Lunette Arrière (Rear windshield) - centered with left:50% + translateX(-50%) */}
         <motion.button
           onClick={() => toggleZone("lunette-arriere")}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={cn(
-            "absolute top-[68%] left-1/2 -translate-x-1/2 w-[50%] h-[9%] transition-all duration-200 border-2 flex items-center justify-center text-xs font-semibold z-10",
+            "absolute top-[68%] w-[50%] h-[9%] transition-all duration-200 border-2 flex items-center justify-center text-xs font-semibold z-10",
             getZoneStyle("lunette-arriere")
           )}
-          style={{ borderRadius: "35% 35% 50% 50% / 40% 40% 80% 80%" }}
+          style={{ 
+            left: "50%", 
+            transform: "translateX(-50%)",
+            borderRadius: "35% 35% 50% 50% / 40% 40% 80% 80%" 
+          }}
         >
           Lunette
         </motion.button>
