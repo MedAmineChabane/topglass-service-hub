@@ -8,22 +8,31 @@ export type GlassZone =
   | "vitre-avant-droite"
   | "vitre-arriere-gauche"
   | "vitre-arriere-droite"
-  | "toit-panoramique";
+  | "toit-panoramique"
+  | "phare-avant-gauche"
+  | "phare-avant-droite"
+  | "feu-arriere-gauche"
+  | "feu-arriere-droite";
 
 interface GlassZoneConfig {
   id: GlassZone;
   label: string;
   shortLabel: string;
+  category: "vitrage" | "optique";
 }
 
 const glassZones: GlassZoneConfig[] = [
-  { id: "pare-brise", label: "Pare-brise", shortLabel: "Pare-brise" },
-  { id: "lunette-arriere", label: "Lunette Arrière", shortLabel: "Lunette" },
-  { id: "vitre-avant-gauche", label: "Vitre Avant Gauche", shortLabel: "Av. G" },
-  { id: "vitre-avant-droite", label: "Vitre Avant Droite", shortLabel: "Av. D" },
-  { id: "vitre-arriere-gauche", label: "Vitre Arrière Gauche", shortLabel: "Ar. G" },
-  { id: "vitre-arriere-droite", label: "Vitre Arrière Droite", shortLabel: "Ar. D" },
-  { id: "toit-panoramique", label: "Toit Panoramique", shortLabel: "Toit" },
+  { id: "pare-brise", label: "Pare-brise", shortLabel: "Pare-brise", category: "vitrage" },
+  { id: "lunette-arriere", label: "Lunette Arrière", shortLabel: "Lunette", category: "vitrage" },
+  { id: "vitre-avant-gauche", label: "Vitre Avant Gauche", shortLabel: "Av. G", category: "vitrage" },
+  { id: "vitre-avant-droite", label: "Vitre Avant Droite", shortLabel: "Av. D", category: "vitrage" },
+  { id: "vitre-arriere-gauche", label: "Vitre Arrière Gauche", shortLabel: "Ar. G", category: "vitrage" },
+  { id: "vitre-arriere-droite", label: "Vitre Arrière Droite", shortLabel: "Ar. D", category: "vitrage" },
+  { id: "toit-panoramique", label: "Toit Panoramique", shortLabel: "Toit", category: "vitrage" },
+  { id: "phare-avant-gauche", label: "Phare Avant Gauche", shortLabel: "Ph. Av. G", category: "optique" },
+  { id: "phare-avant-droite", label: "Phare Avant Droite", shortLabel: "Ph. Av. D", category: "optique" },
+  { id: "feu-arriere-gauche", label: "Feu Arrière Gauche", shortLabel: "Feu Ar. G", category: "optique" },
+  { id: "feu-arriere-droite", label: "Feu Arrière Droite", shortLabel: "Feu Ar. D", category: "optique" },
 ];
 
 interface GlassSelectorProps {
@@ -42,63 +51,102 @@ const GlassSelector = ({ selectedZones, onSelectionChange }: GlassSelectorProps)
 
   const isSelected = (zone: GlassZone) => selectedZones.includes(zone);
 
+  // Style helpers for zones
+  const getZoneStyle = (zone: GlassZone) => {
+    const config = glassZones.find((z) => z.id === zone);
+    const isOptique = config?.category === "optique";
+    
+    if (isSelected(zone)) {
+      return "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/30";
+    }
+    
+    if (isOptique) {
+      return "bg-amber-100/60 border-amber-300/80 text-amber-700 hover:bg-amber-200/70";
+    }
+    
+    return "bg-sky-200/50 border-sky-400/60 text-sky-800 hover:bg-sky-300/60";
+  };
+
   return (
     <div className="space-y-4">
       <p className="text-sm text-muted-foreground text-center">
         Cliquez sur les zones endommagées (sélection multiple possible)
       </p>
       
-      {/* Car Top-Down View */}
-      <div className="relative mx-auto w-full max-w-xs aspect-[2/3]">
-        {/* Car body outline */}
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-100 to-gray-200 rounded-[40%_40%_35%_35%/15%_15%_20%_20%] border-2 border-gray-300 shadow-lg">
-          {/* Hood gradient */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[70%] h-[15%] bg-gradient-to-b from-gray-300/50 to-transparent rounded-t-full" />
-          {/* Trunk gradient */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[60%] h-[12%] bg-gradient-to-t from-gray-300/50 to-transparent rounded-b-full" />
+      {/* Car Top-Down View - More realistic shape */}
+      <div className="relative mx-auto w-full max-w-[280px] aspect-[1/1.6]">
+        {/* Car body outline - smoother, more realistic */}
+        <div 
+          className="absolute inset-[8%] bg-gradient-to-b from-slate-200 via-slate-100 to-slate-200 border-2 border-slate-300/80 shadow-xl"
+          style={{
+            borderRadius: "45% 45% 40% 40% / 20% 20% 18% 18%",
+          }}
+        >
+          {/* Hood highlight */}
+          <div 
+            className="absolute top-[2%] left-1/2 -translate-x-1/2 w-[60%] h-[12%] bg-gradient-to-b from-white/60 to-transparent"
+            style={{ borderRadius: "50% 50% 30% 30% / 100% 100% 30% 30%" }}
+          />
+          {/* Center line accent */}
+          <div className="absolute top-[15%] left-1/2 -translate-x-1/2 w-[2px] h-[70%] bg-slate-300/50" />
+          {/* Trunk highlight */}
+          <div 
+            className="absolute bottom-[2%] left-1/2 -translate-x-1/2 w-[55%] h-[10%] bg-gradient-to-t from-white/40 to-transparent"
+            style={{ borderRadius: "30% 30% 50% 50% / 30% 30% 100% 100%" }}
+          />
         </div>
 
-        {/* Pare-brise (Front windshield) - Top area */}
+        {/* Front Headlights */}
+        <motion.button
+          onClick={() => toggleZone("phare-avant-gauche")}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className={cn(
+            "absolute top-[10%] left-[12%] w-[14%] h-[6%] transition-all duration-200 border-2 flex items-center justify-center text-[8px] font-bold z-10",
+            getZoneStyle("phare-avant-gauche")
+          )}
+          style={{ borderRadius: "40% 60% 60% 40% / 50% 50% 50% 50%" }}
+        >
+          💡
+        </motion.button>
+
+        <motion.button
+          onClick={() => toggleZone("phare-avant-droite")}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className={cn(
+            "absolute top-[10%] right-[12%] w-[14%] h-[6%] transition-all duration-200 border-2 flex items-center justify-center text-[8px] font-bold z-10",
+            getZoneStyle("phare-avant-droite")
+          )}
+          style={{ borderRadius: "60% 40% 40% 60% / 50% 50% 50% 50%" }}
+        >
+          💡
+        </motion.button>
+
+        {/* Pare-brise (Front windshield) */}
         <motion.button
           onClick={() => toggleZone("pare-brise")}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={cn(
-            "absolute top-[8%] left-1/2 -translate-x-1/2 w-[65%] h-[12%] rounded-[50%_50%_40%_40%/100%_100%_50%_50%] transition-all duration-200 border-2 flex items-center justify-center text-xs font-semibold",
-            isSelected("pare-brise")
-              ? "bg-primary text-primary-foreground border-primary shadow-lg"
-              : "bg-sky-100/80 border-sky-300 text-sky-700 hover:bg-sky-200/90"
+            "absolute top-[17%] left-1/2 -translate-x-1/2 w-[58%] h-[11%] transition-all duration-200 border-2 flex items-center justify-center text-xs font-semibold z-10",
+            getZoneStyle("pare-brise")
           )}
+          style={{ borderRadius: "50% 50% 35% 35% / 80% 80% 40% 40%" }}
         >
           Pare-brise
-        </motion.button>
-
-        {/* Toit Panoramique (Panoramic roof) - Center */}
-        <motion.button
-          onClick={() => toggleZone("toit-panoramique")}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className={cn(
-            "absolute top-[28%] left-1/2 -translate-x-1/2 w-[50%] h-[25%] rounded-lg transition-all duration-200 border-2 flex items-center justify-center text-xs font-semibold",
-            isSelected("toit-panoramique")
-              ? "bg-primary text-primary-foreground border-primary shadow-lg"
-              : "bg-sky-100/80 border-sky-300 text-sky-700 hover:bg-sky-200/90"
-          )}
-        >
-          Toit<br />Panoramique
         </motion.button>
 
         {/* Vitre Avant Gauche (Front left window) */}
         <motion.button
           onClick={() => toggleZone("vitre-avant-gauche")}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
           className={cn(
-            "absolute top-[22%] left-[5%] w-[18%] h-[18%] rounded-[20%_40%_40%_20%/30%_30%_30%_30%] transition-all duration-200 border-2 flex items-center justify-center text-[10px] font-semibold leading-tight text-center",
-            isSelected("vitre-avant-gauche")
-              ? "bg-primary text-primary-foreground border-primary shadow-lg"
-              : "bg-sky-100/80 border-sky-300 text-sky-700 hover:bg-sky-200/90"
+            "absolute top-[29%] left-[12%] w-[12%] h-[14%] transition-all duration-200 border-2 flex items-center justify-center text-[9px] font-semibold leading-tight text-center z-10",
+            getZoneStyle("vitre-avant-gauche")
           )}
+          style={{ borderRadius: "30% 50% 50% 30% / 40% 40% 40% 40%" }}
         >
           Av.<br />G
         </motion.button>
@@ -106,29 +154,40 @@ const GlassSelector = ({ selectedZones, onSelectionChange }: GlassSelectorProps)
         {/* Vitre Avant Droite (Front right window) */}
         <motion.button
           onClick={() => toggleZone("vitre-avant-droite")}
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          className={cn(
+            "absolute top-[29%] right-[12%] w-[12%] h-[14%] transition-all duration-200 border-2 flex items-center justify-center text-[9px] font-semibold leading-tight text-center z-10",
+            getZoneStyle("vitre-avant-droite")
+          )}
+          style={{ borderRadius: "50% 30% 30% 50% / 40% 40% 40% 40%" }}
+        >
+          Av.<br />D
+        </motion.button>
+
+        {/* Toit Panoramique (Panoramic roof) - repositioned to not overlap */}
+        <motion.button
+          onClick={() => toggleZone("toit-panoramique")}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={cn(
-            "absolute top-[22%] right-[5%] w-[18%] h-[18%] rounded-[40%_20%_20%_40%/30%_30%_30%_30%] transition-all duration-200 border-2 flex items-center justify-center text-[10px] font-semibold leading-tight text-center",
-            isSelected("vitre-avant-droite")
-              ? "bg-primary text-primary-foreground border-primary shadow-lg"
-              : "bg-sky-100/80 border-sky-300 text-sky-700 hover:bg-sky-200/90"
+            "absolute top-[32%] left-1/2 -translate-x-1/2 w-[42%] h-[20%] rounded-xl transition-all duration-200 border-2 flex items-center justify-center text-[10px] font-semibold z-10",
+            getZoneStyle("toit-panoramique")
           )}
         >
-          Av.<br />D
+          Toit<br />Pano.
         </motion.button>
 
         {/* Vitre Arrière Gauche (Rear left window) */}
         <motion.button
           onClick={() => toggleZone("vitre-arriere-gauche")}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
           className={cn(
-            "absolute top-[45%] left-[5%] w-[18%] h-[18%] rounded-[20%_40%_40%_20%/30%_30%_30%_30%] transition-all duration-200 border-2 flex items-center justify-center text-[10px] font-semibold leading-tight text-center",
-            isSelected("vitre-arriere-gauche")
-              ? "bg-primary text-primary-foreground border-primary shadow-lg"
-              : "bg-sky-100/80 border-sky-300 text-sky-700 hover:bg-sky-200/90"
+            "absolute top-[53%] left-[12%] w-[12%] h-[14%] transition-all duration-200 border-2 flex items-center justify-center text-[9px] font-semibold leading-tight text-center z-10",
+            getZoneStyle("vitre-arriere-gauche")
           )}
+          style={{ borderRadius: "30% 50% 50% 30% / 40% 40% 40% 40%" }}
         >
           Ar.<br />G
         </motion.button>
@@ -136,38 +195,99 @@ const GlassSelector = ({ selectedZones, onSelectionChange }: GlassSelectorProps)
         {/* Vitre Arrière Droite (Rear right window) */}
         <motion.button
           onClick={() => toggleZone("vitre-arriere-droite")}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
           className={cn(
-            "absolute top-[45%] right-[5%] w-[18%] h-[18%] rounded-[40%_20%_20%_40%/30%_30%_30%_30%] transition-all duration-200 border-2 flex items-center justify-center text-[10px] font-semibold leading-tight text-center",
-            isSelected("vitre-arriere-droite")
-              ? "bg-primary text-primary-foreground border-primary shadow-lg"
-              : "bg-sky-100/80 border-sky-300 text-sky-700 hover:bg-sky-200/90"
+            "absolute top-[53%] right-[12%] w-[12%] h-[14%] transition-all duration-200 border-2 flex items-center justify-center text-[9px] font-semibold leading-tight text-center z-10",
+            getZoneStyle("vitre-arriere-droite")
           )}
+          style={{ borderRadius: "50% 30% 30% 50% / 40% 40% 40% 40%" }}
         >
           Ar.<br />D
         </motion.button>
 
-        {/* Lunette Arrière (Rear windshield) - Bottom area */}
+        {/* Lunette Arrière (Rear windshield) */}
         <motion.button
           onClick={() => toggleZone("lunette-arriere")}
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={cn(
-            "absolute bottom-[12%] left-1/2 -translate-x-1/2 w-[55%] h-[10%] rounded-[40%_40%_50%_50%/50%_50%_100%_100%] transition-all duration-200 border-2 flex items-center justify-center text-xs font-semibold",
-            isSelected("lunette-arriere")
-              ? "bg-primary text-primary-foreground border-primary shadow-lg"
-              : "bg-sky-100/80 border-sky-300 text-sky-700 hover:bg-sky-200/90"
+            "absolute top-[68%] left-1/2 -translate-x-1/2 w-[50%] h-[9%] transition-all duration-200 border-2 flex items-center justify-center text-xs font-semibold z-10",
+            getZoneStyle("lunette-arriere")
           )}
+          style={{ borderRadius: "35% 35% 50% 50% / 40% 40% 80% 80%" }}
         >
           Lunette
         </motion.button>
 
-        {/* Wheels - decorative */}
-        <div className="absolute top-[18%] left-[-2%] w-[12%] h-[20%] bg-gray-800 rounded-[40%] border-2 border-gray-600" />
-        <div className="absolute top-[18%] right-[-2%] w-[12%] h-[20%] bg-gray-800 rounded-[40%] border-2 border-gray-600" />
-        <div className="absolute bottom-[22%] left-[-2%] w-[12%] h-[20%] bg-gray-800 rounded-[40%] border-2 border-gray-600" />
-        <div className="absolute bottom-[22%] right-[-2%] w-[12%] h-[20%] bg-gray-800 rounded-[40%] border-2 border-gray-600" />
+        {/* Rear Taillights */}
+        <motion.button
+          onClick={() => toggleZone("feu-arriere-gauche")}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className={cn(
+            "absolute top-[78%] left-[12%] w-[14%] h-[5%] transition-all duration-200 border-2 flex items-center justify-center text-[8px] font-bold z-10",
+            getZoneStyle("feu-arriere-gauche")
+          )}
+          style={{ borderRadius: "40% 60% 60% 40% / 50% 50% 50% 50%" }}
+        >
+          🔴
+        </motion.button>
+
+        <motion.button
+          onClick={() => toggleZone("feu-arriere-droite")}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className={cn(
+            "absolute top-[78%] right-[12%] w-[14%] h-[5%] transition-all duration-200 border-2 flex items-center justify-center text-[8px] font-bold z-10",
+            getZoneStyle("feu-arriere-droite")
+          )}
+          style={{ borderRadius: "60% 40% 40% 60% / 50% 50% 50% 50%" }}
+        >
+          🔴
+        </motion.button>
+
+        {/* Wheels - properly centered with realistic styling */}
+        <div 
+          className="absolute top-[26%] left-[2%] w-[10%] h-[16%] bg-gradient-to-br from-gray-700 to-gray-900 border-2 border-gray-600 shadow-md"
+          style={{ borderRadius: "45%" }}
+        >
+          <div className="absolute inset-[20%] bg-gray-500 rounded-full" />
+        </div>
+        <div 
+          className="absolute top-[26%] right-[2%] w-[10%] h-[16%] bg-gradient-to-br from-gray-700 to-gray-900 border-2 border-gray-600 shadow-md"
+          style={{ borderRadius: "45%" }}
+        >
+          <div className="absolute inset-[20%] bg-gray-500 rounded-full" />
+        </div>
+        <div 
+          className="absolute top-[56%] left-[2%] w-[10%] h-[16%] bg-gradient-to-br from-gray-700 to-gray-900 border-2 border-gray-600 shadow-md"
+          style={{ borderRadius: "45%" }}
+        >
+          <div className="absolute inset-[20%] bg-gray-500 rounded-full" />
+        </div>
+        <div 
+          className="absolute top-[56%] right-[2%] w-[10%] h-[16%] bg-gradient-to-br from-gray-700 to-gray-900 border-2 border-gray-600 shadow-md"
+          style={{ borderRadius: "45%" }}
+        >
+          <div className="absolute inset-[20%] bg-gray-500 rounded-full" />
+        </div>
+      </div>
+
+      {/* Legend */}
+      <div className="flex justify-center gap-4 text-xs text-muted-foreground">
+        <div className="flex items-center gap-1.5">
+          <div className="w-3 h-3 rounded bg-sky-200/50 border border-sky-400/60" />
+          <span>Vitrages</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-3 h-3 rounded bg-amber-100/60 border border-amber-300/80" />
+          <span>Optiques</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <div className="w-3 h-3 rounded bg-primary border border-primary" />
+          <span>Sélectionné</span>
+        </div>
       </div>
 
       {/* Selected zones summary */}
