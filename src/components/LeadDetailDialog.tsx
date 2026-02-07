@@ -78,16 +78,31 @@ const LeadDetailDialog = ({ lead, open, onOpenChange, onLeadUpdated }: LeadDetai
   // Generate signed URLs for attachments (bucket is private)
   React.useEffect(() => {
     const generateSignedUrls = async () => {
-      if (attachments.length === 0) return;
+      if (attachments.length === 0) {
+        setSignedUrls({});
+        return;
+      }
       
       const urls: Record<string, string> = {};
       for (const filePath of attachments) {
-        const { data, error } = await supabase.storage
-          .from('lead-attachments')
-          .createSignedUrl(filePath, 3600); // 1 hour expiry
-        
-        if (data && !error) {
-          urls[filePath] = data.signedUrl;
+        try {
+          // Extract just the path if it's a full URL
+          let cleanPath = filePath;
+          if (filePath.includes('/lead-attachments/')) {
+            cleanPath = filePath.split('/lead-attachments/').pop() || filePath;
+          }
+          
+          const { data, error } = await supabase.storage
+            .from('lead-attachments')
+            .createSignedUrl(cleanPath, 3600); // 1 hour expiry
+          
+          if (data && !error) {
+            urls[filePath] = data.signedUrl;
+          } else {
+            console.error('Error generating signed URL for:', cleanPath, error);
+          }
+        } catch (err) {
+          console.error('Exception generating signed URL:', err);
         }
       }
       setSignedUrls(urls);
