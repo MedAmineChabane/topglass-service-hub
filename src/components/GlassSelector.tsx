@@ -132,13 +132,13 @@ const GlassSelector = ({ selectedZones, onSelectionChange }: GlassSelectorProps)
         </motion.button>
 
         {/* Pare-brise (Front windshield) - wrapper for proper centering */}
-        <div className="absolute top-[17%] left-0 right-0 flex justify-center z-10">
+        <div className="absolute top-[17%] left-0 right-0 flex justify-center z-10 pointer-events-none">
           <motion.button
             onClick={() => toggleZone("pare-brise")}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className={cn(
-              "w-[58%] h-full transition-all duration-200 border-2 flex items-center justify-center text-xs font-semibold",
+              "w-[58%] h-full transition-all duration-200 border-2 flex items-center justify-center text-xs font-semibold pointer-events-auto",
               getZoneStyle("pare-brise")
             )}
             style={{ 
@@ -207,13 +207,13 @@ const GlassSelector = ({ selectedZones, onSelectionChange }: GlassSelectorProps)
         </motion.button>
 
         {/* Toit Panoramique (Panoramic roof) - wrapper for proper centering */}
-        <div className="absolute top-[34%] left-0 right-0 flex justify-center z-10">
+        <div className="absolute top-[34%] left-0 right-0 flex justify-center z-10 pointer-events-none">
           <motion.button
             onClick={() => toggleZone("toit-panoramique")}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className={cn(
-              "w-[42%] rounded-xl transition-all duration-200 border-2 flex items-center justify-center text-[10px] font-semibold",
+              "w-[42%] rounded-xl transition-all duration-200 border-2 flex items-center justify-center text-[10px] font-semibold pointer-events-auto",
               getZoneStyle("toit-panoramique")
             )}
             style={{ aspectRatio: "2.1/1" }}
@@ -279,13 +279,13 @@ const GlassSelector = ({ selectedZones, onSelectionChange }: GlassSelectorProps)
         </motion.button>
 
         {/* Lunette Arrière (Rear windshield) - wrapper for proper centering */}
-        <div className="absolute top-[70%] left-0 right-0 flex justify-center z-10">
+        <div className="absolute top-[70%] left-0 right-0 flex justify-center z-10 pointer-events-none">
           <motion.button
             onClick={() => toggleZone("lunette-arriere")}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             className={cn(
-              "w-[50%] transition-all duration-200 border-2 flex items-center justify-center text-xs font-semibold",
+              "w-[50%] transition-all duration-200 border-2 flex items-center justify-center text-xs font-semibold pointer-events-auto",
               getZoneStyle("lunette-arriere")
             )}
             style={{ 
