@@ -9,6 +9,10 @@ export type GlassZone =
   | "vitre-arriere-gauche"
   | "vitre-arriere-droite"
   | "toit-panoramique"
+  | "deflecteur-avant-gauche"
+  | "deflecteur-avant-droite"
+  | "deflecteur-arriere-gauche"
+  | "deflecteur-arriere-droite"
   | "phare-avant-gauche"
   | "phare-avant-droite"
   | "feu-arriere-gauche"
@@ -29,6 +33,10 @@ const glassZones: GlassZoneConfig[] = [
   { id: "vitre-arriere-gauche", label: "Vitre Arrière Gauche", shortLabel: "Ar. G", category: "vitrage" },
   { id: "vitre-arriere-droite", label: "Vitre Arrière Droite", shortLabel: "Ar. D", category: "vitrage" },
   { id: "toit-panoramique", label: "Toit Panoramique", shortLabel: "Toit", category: "vitrage" },
+  { id: "deflecteur-avant-gauche", label: "Déflecteur Avant Gauche", shortLabel: "Défl. Av. G", category: "vitrage" },
+  { id: "deflecteur-avant-droite", label: "Déflecteur Avant Droite", shortLabel: "Défl. Av. D", category: "vitrage" },
+  { id: "deflecteur-arriere-gauche", label: "Déflecteur Arrière Gauche", shortLabel: "Défl. Ar. G", category: "vitrage" },
+  { id: "deflecteur-arriere-droite", label: "Déflecteur Arrière Droite", shortLabel: "Défl. Ar. D", category: "vitrage" },
   { id: "phare-avant-gauche", label: "Phare Avant Gauche", shortLabel: "Ph. Av. G", category: "optique" },
   { id: "phare-avant-droite", label: "Phare Avant Droite", shortLabel: "Ph. Av. D", category: "optique" },
   { id: "feu-arriere-gauche", label: "Feu Arrière Gauche", shortLabel: "Feu Ar. G", category: "optique" },
@@ -123,23 +131,24 @@ const GlassSelector = ({ selectedZones, onSelectionChange }: GlassSelectorProps)
           💡
         </motion.button>
 
-        {/* Pare-brise (Front windshield) - centered with left:50% + translateX(-50%) */}
-        <motion.button
-          onClick={() => toggleZone("pare-brise")}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-          className={cn(
-            "absolute top-[17%] w-[58%] h-[11%] transition-all duration-200 border-2 flex items-center justify-center text-xs font-semibold z-10",
-            getZoneStyle("pare-brise")
-          )}
-          style={{ 
-            left: "50%", 
-            transform: "translateX(-50%)",
-            borderRadius: "50% 50% 35% 35% / 80% 80% 40% 40%" 
-          }}
-        >
-          Pare-brise
-        </motion.button>
+        {/* Pare-brise (Front windshield) - wrapper for proper centering */}
+        <div className="absolute top-[17%] left-0 right-0 flex justify-center z-10">
+          <motion.button
+            onClick={() => toggleZone("pare-brise")}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className={cn(
+              "w-[58%] h-full transition-all duration-200 border-2 flex items-center justify-center text-xs font-semibold",
+              getZoneStyle("pare-brise")
+            )}
+            style={{ 
+              aspectRatio: "5.3/1",
+              borderRadius: "50% 50% 35% 35% / 80% 80% 40% 40%" 
+            }}
+          >
+            Pare-brise
+          </motion.button>
+        </div>
 
         {/* Vitre Avant Gauche (Front left window) */}
         <motion.button
@@ -169,19 +178,49 @@ const GlassSelector = ({ selectedZones, onSelectionChange }: GlassSelectorProps)
           Av.<br />D
         </motion.button>
 
-        {/* Toit Panoramique (Panoramic roof) - centered with left:50% + translateX(-50%) */}
+        {/* Déflecteur Avant Gauche (Front left quarter window) */}
         <motion.button
-          onClick={() => toggleZone("toit-panoramique")}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          onClick={() => toggleZone("deflecteur-avant-gauche")}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           className={cn(
-            "absolute top-[32%] w-[42%] h-[20%] rounded-xl transition-all duration-200 border-2 flex items-center justify-center text-[10px] font-semibold z-10",
-            getZoneStyle("toit-panoramique")
+            "absolute top-[28%] left-[12%] w-[8%] h-[5%] transition-all duration-200 border-2 flex items-center justify-center text-[6px] font-bold z-10",
+            getZoneStyle("deflecteur-avant-gauche")
           )}
-          style={{ left: "50%", transform: "translateX(-50%)" }}
+          style={{ borderRadius: "30% 50% 50% 30% / 50% 50% 50% 50%" }}
         >
-          Toit<br />Pano.
+          ▲
         </motion.button>
+
+        {/* Déflecteur Avant Droite (Front right quarter window) */}
+        <motion.button
+          onClick={() => toggleZone("deflecteur-avant-droite")}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className={cn(
+            "absolute top-[28%] right-[12%] w-[8%] h-[5%] transition-all duration-200 border-2 flex items-center justify-center text-[6px] font-bold z-10",
+            getZoneStyle("deflecteur-avant-droite")
+          )}
+          style={{ borderRadius: "50% 30% 30% 50% / 50% 50% 50% 50%" }}
+        >
+          ▲
+        </motion.button>
+
+        {/* Toit Panoramique (Panoramic roof) - wrapper for proper centering */}
+        <div className="absolute top-[34%] left-0 right-0 flex justify-center z-10">
+          <motion.button
+            onClick={() => toggleZone("toit-panoramique")}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className={cn(
+              "w-[42%] rounded-xl transition-all duration-200 border-2 flex items-center justify-center text-[10px] font-semibold",
+              getZoneStyle("toit-panoramique")
+            )}
+            style={{ aspectRatio: "2.1/1" }}
+          >
+            Toit<br />Pano.
+          </motion.button>
+        </div>
 
         {/* Vitre Arrière Gauche (Rear left window) */}
         <motion.button
@@ -211,23 +250,52 @@ const GlassSelector = ({ selectedZones, onSelectionChange }: GlassSelectorProps)
           Ar.<br />D
         </motion.button>
 
-        {/* Lunette Arrière (Rear windshield) - centered with left:50% + translateX(-50%) */}
+        {/* Déflecteur Arrière Gauche (Rear left quarter window) */}
         <motion.button
-          onClick={() => toggleZone("lunette-arriere")}
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          onClick={() => toggleZone("deflecteur-arriere-gauche")}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           className={cn(
-            "absolute top-[68%] w-[50%] h-[9%] transition-all duration-200 border-2 flex items-center justify-center text-xs font-semibold z-10",
-            getZoneStyle("lunette-arriere")
+            "absolute top-[65%] left-[12%] w-[8%] h-[5%] transition-all duration-200 border-2 flex items-center justify-center text-[6px] font-bold z-10",
+            getZoneStyle("deflecteur-arriere-gauche")
           )}
-          style={{ 
-            left: "50%", 
-            transform: "translateX(-50%)",
-            borderRadius: "35% 35% 50% 50% / 40% 40% 80% 80%" 
-          }}
+          style={{ borderRadius: "30% 50% 50% 30% / 50% 50% 50% 50%" }}
         >
-          Lunette
+          ▼
         </motion.button>
+
+        {/* Déflecteur Arrière Droite (Rear right quarter window) */}
+        <motion.button
+          onClick={() => toggleZone("deflecteur-arriere-droite")}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className={cn(
+            "absolute top-[65%] right-[12%] w-[8%] h-[5%] transition-all duration-200 border-2 flex items-center justify-center text-[6px] font-bold z-10",
+            getZoneStyle("deflecteur-arriere-droite")
+          )}
+          style={{ borderRadius: "50% 30% 30% 50% / 50% 50% 50% 50%" }}
+        >
+          ▼
+        </motion.button>
+
+        {/* Lunette Arrière (Rear windshield) - wrapper for proper centering */}
+        <div className="absolute top-[70%] left-0 right-0 flex justify-center z-10">
+          <motion.button
+            onClick={() => toggleZone("lunette-arriere")}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className={cn(
+              "w-[50%] transition-all duration-200 border-2 flex items-center justify-center text-xs font-semibold",
+              getZoneStyle("lunette-arriere")
+            )}
+            style={{ 
+              aspectRatio: "5.5/1",
+              borderRadius: "35% 35% 50% 50% / 40% 40% 80% 80%" 
+            }}
+          >
+            Lunette
+          </motion.button>
+        </div>
 
         {/* Rear Taillights */}
         <motion.button
