@@ -659,23 +659,23 @@ const Devis = () => {
                     </Select>
                   </div>
 
-                  {/* VIN Field - Optional */}
-                  <div>
-                    <label className="text-sm text-muted-foreground mb-2 flex items-center gap-2">
+                  {/* VIN Field - Optional - Red highlight for visibility */}
+                  <div className="border-2 border-destructive/50 rounded-lg p-3 bg-destructive/5">
+                    <label className="text-sm font-semibold text-destructive mb-2 flex items-center gap-2">
                       Numéro VIN (Case E carte grise)
-                      <span className="text-xs text-muted-foreground/70 italic">(optionnel)</span>
+                      <span className="text-xs text-destructive/70 italic">(optionnel)</span>
                     </label>
                     <div className="relative">
-                      <Info className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                      <Info className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-destructive/70" />
                       <Input
                         value={formData.vin}
                         onChange={(e) => updateFormData("vin", e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''))}
                         placeholder="Ex: VF1RFB00123456789"
-                        className="pl-10 font-mono text-sm"
+                        className="pl-10 font-mono text-sm border-destructive/40 focus-visible:ring-destructive/30"
                         maxLength={17}
                       />
                     </div>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-xs text-destructive/70 mt-1">
                       Le VIN contient 17 caractères et permet d'identifier précisément votre véhicule.
                     </p>
                   </div>
