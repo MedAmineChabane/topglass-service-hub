@@ -208,7 +208,7 @@ const Devis = () => {
     vehicleModel: "",
     vehicleType: "",
     vin: "", // Numéro VIN (optionnel)
-    // Step 2 - Besoin
+    carteGriseFile: null as File | null, // Photo carte grise
     serviceType: "vitrage" as "carrosserie" | "vitrage",
     selectedGlassZones: [] as GlassZone[], // Zones de vitrage sélectionnées
     // Step 3 - Dégâts
@@ -659,31 +659,80 @@ const Devis = () => {
                     </Select>
                   </div>
 
-                  {/* VIN Field - Optional - Red highlight for visibility */}
-                  <div className="border-2 border-destructive/50 rounded-lg p-3 bg-destructive/5">
-                    <label className="text-sm font-semibold text-destructive mb-2 flex items-center gap-2">
-                      Numéro VIN (Case E carte grise)
-                      <span className="text-xs text-destructive/70 italic">(optionnel)</span>
-                    </label>
-                    <div className="relative">
-                      <Info className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-destructive/70" />
+                  {/* VIN or Carte Grise - Conditional validation */}
+                  <div className="border-2 border-destructive/50 rounded-lg p-4 bg-destructive/5 space-y-4">
+                    <p className="text-sm font-bold text-destructive flex items-center gap-2">
+                      <Info className="w-4 h-4" />
+                      Identification du véhicule (VIN ou Carte Grise obligatoire)
+                    </p>
+
+                    {/* Option A: VIN */}
+                    <div>
+                      <label className="text-sm font-semibold text-destructive/80 mb-1 block">
+                        Option A — Numéro VIN (Case E carte grise)
+                      </label>
                       <Input
                         value={formData.vin}
                         onChange={(e) => updateFormData("vin", e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''))}
                         placeholder="Ex: VF1RFB00123456789"
-                        className="pl-10 font-mono text-sm border-destructive/40 focus-visible:ring-destructive/30"
+                        className="font-mono text-sm border-destructive/40 focus-visible:ring-destructive/30"
                         maxLength={17}
                       />
+                      <p className="text-xs text-destructive/60 mt-1">17 caractères alphanumériques</p>
                     </div>
-                    <p className="text-xs text-destructive/70 mt-1">
-                      Le VIN contient 17 caractères et permet d'identifier précisément votre véhicule.
-                    </p>
+
+                    <div className="flex items-center gap-3">
+                      <div className="h-px flex-1 bg-destructive/20" />
+                      <span className="text-xs font-bold text-destructive/60 uppercase">ou</span>
+                      <div className="h-px flex-1 bg-destructive/20" />
+                    </div>
+
+                    {/* Option B: Carte Grise Upload */}
+                    <div>
+                      <label className="text-sm font-semibold text-destructive/80 mb-1 block">
+                        Option B — Photo de la carte grise
+                      </label>
+                      {formData.carteGriseFile ? (
+                        <div className="flex items-center gap-3 bg-white rounded-lg border border-destructive/30 p-3">
+                          <CheckCircle className="w-5 h-5 text-green-600 shrink-0" />
+                          <span className="text-sm text-foreground truncate flex-1">{formData.carteGriseFile.name}</span>
+                          <button
+                            onClick={() => updateFormData("carteGriseFile", null)}
+                            className="text-destructive hover:text-destructive/80"
+                          >
+                            <X className="w-4 h-4" />
+                          </button>
+                        </div>
+                      ) : (
+                        <label className="flex flex-col items-center justify-center gap-2 p-4 border-2 border-dashed border-destructive/30 rounded-lg cursor-pointer hover:border-destructive/50 hover:bg-destructive/5 transition-colors bg-white">
+                          <Upload className="w-6 h-6 text-destructive/50" />
+                          <span className="text-sm text-destructive/70 font-medium">Importer une photo de la carte grise</span>
+                          <span className="text-xs text-muted-foreground">.jpg, .png ou .pdf</span>
+                          <input
+                            type="file"
+                            accept=".jpg,.jpeg,.png,.pdf,image/jpeg,image/png,application/pdf"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (file) updateFormData("carteGriseFile", file);
+                            }}
+                            className="hidden"
+                          />
+                        </label>
+                      )}
+                    </div>
+
+                    {/* Validation message */}
+                    {!formData.vin && !formData.carteGriseFile && (
+                      <p className="text-xs text-destructive font-medium">
+                        ⚠ Veuillez renseigner le VIN ou importer la carte grise pour continuer.
+                      </p>
+                    )}
                   </div>
                 </div>
 
                 <Button
                   onClick={handleVehicleConfirm}
-                  disabled={!formData.vehicleBrand || !formData.vehicleModel || !formData.vehicleType}
+                  disabled={!formData.vehicleBrand || !formData.vehicleModel || !formData.vehicleType || (!formData.vin && !formData.carteGriseFile)}
                   className="w-full mt-6 bg-primary hover:bg-primary/90 text-primary-foreground h-12 text-lg font-semibold"
                 >
                   VALIDER
@@ -1326,6 +1375,7 @@ const Devis = () => {
                         vehicleModel: "",
                         vehicleType: "",
                         vin: "",
+                        carteGriseFile: null,
                         serviceType: "vitrage",
                         selectedGlassZones: [],
                         photos: [],

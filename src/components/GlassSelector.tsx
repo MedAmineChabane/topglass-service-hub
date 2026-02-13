@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export type GlassZone = 
   | "pare-brise"
@@ -399,22 +400,59 @@ const GlassSelector = ({ selectedZones, onSelectionChange }: GlassSelectorProps)
         </motion.div>
       )}
 
-      {/* Legend for mobile */}
-      <div className="grid grid-cols-2 gap-2 text-xs md:hidden">
-        {glassZones.map((zone) => (
-          <button
-            key={zone.id}
-            onClick={() => toggleZone(zone.id)}
-            className={cn(
-              "py-2 px-3 rounded-lg border-2 transition-all text-left",
-              isSelected(zone.id)
-                ? "bg-primary text-primary-foreground border-primary"
-                : "bg-white border-gray-200 text-muted-foreground hover:border-primary/50"
-            )}
-          >
-            {zone.label}
-          </button>
-        ))}
+      {/* Checkbox list - synchronized with visual schema */}
+      <div className="space-y-3">
+        <p className="text-sm font-semibold text-foreground">Ou cochez dans la liste :</p>
+        
+        {/* Vitrages */}
+        <div>
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">Vitrages</p>
+          <div className="grid grid-cols-2 gap-2">
+            {glassZones.filter(z => z.category === "vitrage").map((zone) => (
+              <label
+                key={zone.id}
+                className={cn(
+                  "flex items-center gap-2 py-2 px-3 rounded-lg border-2 transition-all cursor-pointer text-sm",
+                  isSelected(zone.id)
+                    ? "bg-primary/10 border-primary text-foreground"
+                    : "bg-white border-gray-200 text-muted-foreground hover:border-primary/50"
+                )}
+              >
+                <Checkbox
+                  checked={isSelected(zone.id)}
+                  onCheckedChange={() => toggleZone(zone.id)}
+                  className="data-[state=checked]:bg-primary"
+                />
+                {zone.label}
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {/* Optiques */}
+        <div>
+          <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">Optiques</p>
+          <div className="grid grid-cols-2 gap-2">
+            {glassZones.filter(z => z.category === "optique").map((zone) => (
+              <label
+                key={zone.id}
+                className={cn(
+                  "flex items-center gap-2 py-2 px-3 rounded-lg border-2 transition-all cursor-pointer text-sm",
+                  isSelected(zone.id)
+                    ? "bg-primary/10 border-primary text-foreground"
+                    : "bg-white border-gray-200 text-muted-foreground hover:border-primary/50"
+                )}
+              >
+                <Checkbox
+                  checked={isSelected(zone.id)}
+                  onCheckedChange={() => toggleZone(zone.id)}
+                  className="data-[state=checked]:bg-primary"
+                />
+                {zone.label}
+              </label>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
