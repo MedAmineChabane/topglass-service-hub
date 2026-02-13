@@ -9,7 +9,7 @@ const corsHeaders = {
 const MAX_REQUESTS = 10; // Allow more uploads per window since they're part of form submission
 const WINDOW_MINUTES = 15;
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB max file size
-const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'heic', 'heif'];
+const ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'heic', 'heif', 'pdf'];
 
 Deno.serve(async (req) => {
   // Handle CORS preflight requests
@@ -118,14 +118,14 @@ Deno.serve(async (req) => {
     const extension = fileName.split('.').pop() || '';
     if (!ALLOWED_EXTENSIONS.includes(extension)) {
       return new Response(
-        JSON.stringify({ error: 'Type de fichier non autorisé. Formats acceptés: JPG, PNG, GIF, WebP, HEIC.' }),
+        JSON.stringify({ error: 'Type de fichier non autorisé. Formats acceptés: JPG, PNG, GIF, WebP, HEIC, PDF.' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
 
     // Validate content type
     const contentType = file.type || 'application/octet-stream';
-    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/heic', 'image/heif', 'application/octet-stream'];
+    const allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/heic', 'image/heif', 'application/pdf', 'application/octet-stream'];
     if (!allowedMimeTypes.includes(contentType)) {
       return new Response(
         JSON.stringify({ error: 'Type MIME non autorisé.' }),

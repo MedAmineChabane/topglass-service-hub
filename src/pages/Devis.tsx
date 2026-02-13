@@ -393,6 +393,23 @@ const Devis = () => {
         }
       }
 
+      // Upload carte grise file if provided
+      if (formData.carteGriseFile) {
+        const carteGriseFormData = new FormData();
+        carteGriseFormData.append('file', formData.carteGriseFile);
+        carteGriseFormData.append('leadId', leadId);
+
+        const { data: cgData, error: cgError } = await supabase.functions.invoke('upload-lead-photo', {
+          body: carteGriseFormData,
+        });
+
+        if (cgError) {
+          console.warn('Carte grise upload warning:', cgError);
+        } else if (cgData?.error) {
+          console.warn('Carte grise upload warning:', cgData.error);
+        }
+      }
+
       // Send email notification to TopGlass team
       try {
         const { error: notificationError } = await supabase.functions.invoke('send-lead-notification', {
