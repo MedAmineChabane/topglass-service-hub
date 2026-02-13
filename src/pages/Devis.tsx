@@ -767,82 +767,84 @@ const Devis = () => {
               animate="center"
               exit="exit"
               transition={{ duration: 0.3 }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-12"
+              className="space-y-8"
             >
-              <div>
-                <Button
-                  variant="ghost"
-                  onClick={prevStep}
-                  className="mb-6 text-primary hover:text-primary/80"
-                >
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  Retour
-                </Button>
-                <h1 className="font-display font-black text-3xl md:text-4xl text-foreground mb-6 uppercase italic">
-                  Quelle est<br />votre situation ?
-                </h1>
-                <p className="text-muted-foreground text-lg">
-                  Décrivez au mieux vos dégâts et votre couverture d'assurance 
-                  (tous risques, au tiers, avec ou sans franchise...). 
-                  Plus vous êtes précis, plus nous pourrons vous proposer un devis adapté.
-                </p>
-              </div>
-
-              <div className="space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 <div>
-                  <h3 className="font-semibold text-lg mb-4">Quel est le type de demande ?</h3>
-                  <div className="flex gap-6">
-                    <button
-                      onClick={() => updateFormData("serviceType", "carrosserie")}
-                      className={`flex flex-col items-center gap-3 p-8 rounded-2xl transition-all transform hover:scale-105 ${
-                        formData.serviceType === "carrosserie"
-                          ? "bg-primary text-primary-foreground shadow-lg"
-                          : "bg-white border-2 border-gray-200 hover:border-primary/50 hover:shadow-md"
-                      }`}
-                    >
-                      <BodyworkServiceIcon isSelected={formData.serviceType === "carrosserie"} />
-                      <span className="font-semibold text-sm uppercase tracking-wide">Carrosserie</span>
-                    </button>
-                    <button
-                      onClick={() => updateFormData("serviceType", "vitrage")}
-                      className={`flex flex-col items-center gap-3 p-8 rounded-2xl transition-all transform hover:scale-105 ${
-                        formData.serviceType === "vitrage"
-                          ? "bg-primary text-primary-foreground shadow-lg"
-                          : "bg-white border-2 border-gray-200 hover:border-primary/50 hover:shadow-md"
-                      }`}
-                    >
-                      <GlassServiceIcon isSelected={formData.serviceType === "vitrage"} />
-                      <span className="font-semibold text-sm uppercase tracking-wide">Vitrage</span>
-                    </button>
-                  </div>
+                  <Button
+                    variant="ghost"
+                    onClick={prevStep}
+                    className="mb-6 text-primary hover:text-primary/80"
+                  >
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                    Retour
+                  </Button>
+                  <h1 className="font-display font-black text-3xl md:text-4xl text-foreground mb-6 uppercase italic">
+                    Quelle est<br />votre situation ?
+                  </h1>
+                  <p className="text-muted-foreground text-lg">
+                    Décrivez au mieux vos dégâts et votre couverture d'assurance 
+                    (tous risques, au tiers, avec ou sans franchise...). 
+                    Plus vous êtes précis, plus nous pourrons vous proposer un devis adapté.
+                  </p>
                 </div>
 
-                {/* Glass Zone Selector - Only for vitrage service */}
-                {formData.serviceType === "vitrage" && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    className="bg-white rounded-2xl p-6 shadow-md border border-gray-100"
-                  >
-                    <h3 className="font-semibold text-lg mb-4 text-center">
-                      Quels vitrages sont concernés ?
-                    </h3>
-                    <GlassSelector
-                      selectedZones={formData.selectedGlassZones}
-                      onSelectionChange={(zones) => updateFormData("selectedGlassZones", zones)}
-                    />
-                  </motion.div>
-                )}
-
-                <Button
-                  onClick={nextStep}
-                  disabled={!formData.serviceType}
-                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground h-12 text-lg font-semibold"
-                >
-                  SUIVANT
-                </Button>
+                <div className="space-y-6">
+                  <div>
+                    <h3 className="font-semibold text-lg mb-4">Quel est le type de demande ?</h3>
+                    <div className="flex gap-6">
+                      <button
+                        onClick={() => updateFormData("serviceType", "carrosserie")}
+                        className={`flex flex-col items-center gap-3 p-8 rounded-2xl transition-all transform hover:scale-105 ${
+                          formData.serviceType === "carrosserie"
+                            ? "bg-primary text-primary-foreground shadow-lg"
+                            : "bg-white border-2 border-gray-200 hover:border-primary/50 hover:shadow-md"
+                        }`}
+                      >
+                        <BodyworkServiceIcon isSelected={formData.serviceType === "carrosserie"} />
+                        <span className="font-semibold text-sm uppercase tracking-wide">Carrosserie</span>
+                      </button>
+                      <button
+                        onClick={() => updateFormData("serviceType", "vitrage")}
+                        className={`flex flex-col items-center gap-3 p-8 rounded-2xl transition-all transform hover:scale-105 ${
+                          formData.serviceType === "vitrage"
+                            ? "bg-primary text-primary-foreground shadow-lg"
+                            : "bg-white border-2 border-gray-200 hover:border-primary/50 hover:shadow-md"
+                        }`}
+                      >
+                        <GlassServiceIcon isSelected={formData.serviceType === "vitrage"} />
+                        <span className="font-semibold text-sm uppercase tracking-wide">Vitrage</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
+
+              {/* Glass Zone Selector - Full width below */}
+              {formData.serviceType === "vitrage" && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  className="bg-white rounded-2xl p-6 shadow-md border border-gray-100"
+                >
+                  <h3 className="font-semibold text-lg mb-4 text-center">
+                    Quels vitrages sont concernés ?
+                  </h3>
+                  <GlassSelector
+                    selectedZones={formData.selectedGlassZones}
+                    onSelectionChange={(zones) => updateFormData("selectedGlassZones", zones)}
+                  />
+                </motion.div>
+              )}
+
+              <Button
+                onClick={nextStep}
+                disabled={!formData.serviceType}
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground h-12 text-lg font-semibold"
+              >
+                SUIVANT
+              </Button>
             </motion.div>
           )}
 
