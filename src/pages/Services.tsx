@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import serviceVitrages from "@/assets/service-remplacement-vitrages.png";
+import serviceLunetteArriere from "@/assets/service-lunette-arriere.png";
 
 const services = [
   {
@@ -23,7 +24,7 @@ const services = [
   {
     title: "Lunette arrière",
     description: "Remplacement de lunette arrière avec dégivrage intégré selon le modèle de votre véhicule.",
-    image: null,
+    image: serviceLunetteArriere,
   },
   {
     title: "Toit panoramique",
