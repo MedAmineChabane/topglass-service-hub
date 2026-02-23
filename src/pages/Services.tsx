@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 
 const services = [
   {
-    title: "Remplacement pare-brise",
-    description: "Remplacement complet de votre pare-brise avec des verres de qualité d'origine. Intervention rapide et garantie.",
+    title: "Remplacement vitrages",
+    description: "Remplacement complet de vos vitrages avec des verres de qualité d'origine. Intervention rapide et garantie.",
   },
   {
     title: "Réparation d'impact",
-    description: "Réparation d'impact et de fissures sur votre pare-brise pour éviter un remplacement coûteux.",
+    description: "Réparation d'impact et de fissures sur vos vitrages pour éviter un remplacement coûteux.",
   },
   {
     title: "Vitre latérale",

@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 const services = [
-  { name: "Remplacement pare-brise", href: "/services" },
+  { name: "Remplacement vitrages", href: "/services" },
   { name: "Réparation d'impact", href: "/services" },
   { name: "Vitre latérale", href: "/services" },
   { name: "Lunette arrière", href: "/services" },
@@ -43,7 +43,7 @@ const Header = ({ minimal = false }: HeaderProps) => {
         <a href="/" className="flex items-center">
           <img 
             src="/assets/topglass-logo.png" 
-            alt="Topglass - Remplacement pare-brise" 
+             alt="Topglass - Remplacement vitrages" 
             className="h-16 w-16 md:h-20 md:w-20 rounded-full object-cover shadow-lg transition-all duration-300 hover:scale-105"
           />
         </a>
@@ -65,7 +65,7 @@ const Header = ({ minimal = false }: HeaderProps) => {
           <a href="/" className="flex items-center">
             <motion.img 
               src="/assets/topglass-logo.png" 
-              alt="Topglass - Remplacement pare-brise" 
+              alt="Topglass - Remplacement vitrages" 
               animate={{
                 width: isScrolled ? 56 : 96,
                 height: isScrolled ? 56 : 96,

@@ -7,7 +7,7 @@ const testimonials = [{
   name: "Marie L.",
   location: "Marseille",
   rating: 5,
-  text: "Service impeccable ! Le technicien est venu chez moi en moins de 24h. Pare-brise remplacé en 1h30, aucune avance de frais. Je recommande vivement.",
+  text: "Service impeccable ! Le technicien est venu chez moi en moins de 24h. Vitrage remplacé en 1h30, aucune avance de frais. Je recommande vivement.",
   date: "Il y a 2 semaines"
 }, {
   name: "Thomas B.",
@@ -31,7 +31,7 @@ const testimonials = [{
   name: "Nadia K.",
   location: "Marseille",
   rating: 5,
-  text: "Prise en charge directe avec mon assurance, je n'ai rien eu à avancer. Le pare-brise est parfait, aucun défaut visible.",
+  text: "Prise en charge directe avec mon assurance, je n'ai rien eu à avancer. Le vitrage est parfait, aucun défaut visible.",
   date: "Il y a 2 mois"
 }, {
   name: "Laurent G.",

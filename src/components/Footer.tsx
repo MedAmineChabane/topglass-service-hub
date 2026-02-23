@@ -45,7 +45,7 @@ const Footer = ({
                 <span className="text-sky-500">glass</span>
               </span>
             </div>
-            <p className="text-background/70 mb-4">Leader du remplacement de pare-brise à marseille et region Paca. Intervention rapide, service de qualité.</p>
+            <p className="text-background/70 mb-4">Leader du remplacement de vitrages à Marseille et région PACA. Intervention rapide, service de qualité.</p>
             <div className="flex gap-4">
               <a href="#" className="text-background/70 hover:text-primary transition-colors">
                 <Facebook className="w-5 h-5" />
@@ -60,7 +60,7 @@ const Footer = ({
           <div>
             <h4 className="font-display font-semibold text-lg mb-4">Nos Services</h4>
             <ul className="space-y-3 text-background/70">
-              <li><a href="/services" className="hover:text-primary transition-colors">Remplacement pare-brise</a></li>
+              <li><a href="/services" className="hover:text-primary transition-colors">Remplacement vitrages</a></li>
               <li><a href="/services" className="hover:text-primary transition-colors">Réparation d'impact</a></li>
               <li><a href="/services" className="hover:text-primary transition-colors">Vitre latérale</a></li>
               <li><a href="/services" className="hover:text-primary transition-colors">Lunette arrière</a></li>
