@@ -2,27 +2,33 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import serviceVitrages from "@/assets/service-remplacement-vitrages.png";
 
 const services = [
   {
     title: "Remplacement vitrages",
     description: "Remplacement complet de vos vitrages avec des verres de qualité d'origine. Intervention rapide et garantie.",
+    image: serviceVitrages,
   },
   {
     title: "Réparation d'impact",
     description: "Réparation d'impact et de fissures sur vos vitrages pour éviter un remplacement coûteux.",
+    image: null,
   },
   {
     title: "Vitre latérale",
     description: "Remplacement de vitres latérales avant et arrière pour tous types de véhicules.",
+    image: null,
   },
   {
     title: "Lunette arrière",
     description: "Remplacement de lunette arrière avec dégivrage intégré selon le modèle de votre véhicule.",
+    image: null,
   },
   {
     title: "Toit panoramique",
     description: "Remplacement et réparation de toits panoramiques en verre, intervention spécialisée.",
+    image: null,
   },
 ];
 
@@ -51,10 +57,13 @@ const Services = () => {
                 key={index}
                 className="bg-card rounded-2xl border border-border/50 shadow-md overflow-hidden flex flex-col"
               >
-                {/* Placeholder image */}
-                <div className="w-full h-44 bg-muted flex items-center justify-center">
-                  <span className="text-muted-foreground text-sm">Image à venir</span>
-                </div>
+                {service.image ? (
+                  <img src={service.image} alt={service.title} className="w-full h-44 object-cover" />
+                ) : (
+                  <div className="w-full h-44 bg-muted flex items-center justify-center">
+                    <span className="text-muted-foreground text-sm">Image à venir</span>
+                  </div>
+                )}
                 <div className="p-6 flex flex-col flex-1">
                   <h3 className="font-display font-bold text-lg mb-2 text-foreground">{service.title}</h3>
                   <p className="text-muted-foreground text-sm mb-4 flex-1">{service.description}</p>
