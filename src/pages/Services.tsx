@@ -3,7 +3,7 @@ import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import serviceVitrages from "@/assets/service-remplacement-vitrages.png";
-import serviceLunetteArriere from "@/assets/service-lunette-arriere.png";
+import serviceReparationImpact from "@/assets/service-reparation-impact.png";
 
 const services = [
   {
@@ -14,7 +14,7 @@ const services = [
   {
     title: "Réparation d'impact",
     description: "Réparation d'impact et de fissures sur vos vitrages pour éviter un remplacement coûteux.",
-    image: null,
+    image: serviceReparationImpact,
   },
   {
     title: "Vitre latérale",
@@ -24,7 +24,7 @@ const services = [
   {
     title: "Lunette arrière",
     description: "Remplacement de lunette arrière avec dégivrage intégré selon le modèle de votre véhicule.",
-    image: serviceLunetteArriere,
+    image: null,
   },
   {
     title: "Toit panoramique",
