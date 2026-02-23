@@ -39,7 +39,7 @@ const Hero = () => {
           duration: 0.5
         }} className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm text-white px-4 py-2 rounded-full mb-8">
             <CheckCircle className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium">top 5 du remplacement de pare-brise</span>
+            <span className="text-sm font-medium">top 5 du remplacement de vitrages</span>
           </motion.div>
 
           {/* Title */}
@@ -57,7 +57,7 @@ const Hero = () => {
         }}>
             <span className="text-white">TOP</span>
             <span className="text-sky-500">GLASS</span>
-            <span className="text-white"> : Remplacement Pare-Brise à{" "}</span>
+            <span className="text-white"> : Remplacement Vitrages à{" "}</span>
             <span className="text-sky-500">Marseille & Région PACA.</span>
           </motion.h1>
 
