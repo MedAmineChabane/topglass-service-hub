@@ -52,12 +52,12 @@ const Hero = () => {
         }} transition={{
           duration: 0.5,
           delay: 0.1
-        }} className="font-display font-bold text-3xl md:text-4xl lg:text-5xl leading-tight mb-6" style={{
+        }} className="font-display font-bold text-4xl md:text-5xl lg:text-6xl leading-tight mb-6" style={{
           textShadow: '2px 2px 0 rgba(0,0,0,0.8), -2px -2px 0 rgba(0,0,0,0.8), 2px -2px 0 rgba(0,0,0,0.8), -2px 2px 0 rgba(0,0,0,0.8), 0 4px 8px rgba(0,0,0,0.5)'
         }}>
-            <img src="/assets/topglass-logo.png" alt="Topglass" className="inline-block h-16 md:h-24 lg:h-28 w-auto rounded-full mb-2" />
-            <br />
-            <span className="text-white">Remplacement Pare-Brise à{" "}</span>
+            <span className="text-white">TOP</span>
+            <span className="text-sky-500">GLASS</span>
+            <span className="text-white"> : Remplacement Pare-Brise à{" "}</span>
             <span className="text-sky-500">Marseille & Région PACA.</span>
           </motion.h1>
 
