@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import serviceVitrages from "@/assets/service-remplacement-vitrages.png";
 import serviceReparationImpact from "@/assets/service-reparation-impact.png";
+import serviceToitPanoramique from "@/assets/service-toit-panoramique.png";
 
 const services = [
   {
@@ -29,7 +30,7 @@ const services = [
   {
     title: "Toit panoramique",
     description: "Remplacement et réparation de toits panoramiques en verre, intervention spécialisée.",
-    image: null,
+    image: serviceToitPanoramique,
   },
 ];
 
