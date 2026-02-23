@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import serviceVitrages from "@/assets/service-remplacement-vitrages.png";
 import serviceReparationImpact from "@/assets/service-reparation-impact.png";
 import serviceToitPanoramique from "@/assets/service-toit-panoramique.png";
+import serviceLunetteArriere from "@/assets/service-lunette-arriere.png";
+import serviceVitreLaterale from "@/assets/service-vitre-laterale.png";
 
 const services = [
   {
@@ -20,12 +22,12 @@ const services = [
   {
     title: "Vitre latérale",
     description: "Remplacement de vitres latérales avant et arrière pour tous types de véhicules.",
-    image: null,
+    image: serviceVitreLaterale,
   },
   {
     title: "Lunette arrière",
     description: "Remplacement de lunette arrière avec dégivrage intégré selon le modèle de votre véhicule.",
-    image: null,
+    image: serviceLunetteArriere,
   },
   {
     title: "Toit panoramique",
