@@ -5,11 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 const services = [
-  { name: "Remplacement pare-brise", href: "/devis" },
-  { name: "Réparation d'impact", href: "/devis" },
-  { name: "Vitre latérale", href: "/devis" },
-  { name: "Lunette arrière", href: "/devis" },
-  { name: "Toit panoramique", href: "/devis" },
+  { name: "Remplacement pare-brise", href: "/services" },
+  { name: "Réparation d'impact", href: "/services" },
+  { name: "Vitre latérale", href: "/services" },
+  { name: "Lunette arrière", href: "/services" },
+  { name: "Toit panoramique", href: "/services" },
 ];
 
 interface HeaderProps {
@@ -172,7 +172,7 @@ const Header = ({ minimal = false }: HeaderProps) => {
           >
             <nav className="container mx-auto px-4 py-4 flex flex-col gap-4">
               <a 
-                href="/devis" 
+                href="/services" 
                 className="text-foreground py-2 font-medium"
                 onClick={() => setIsMenuOpen(false)}
               >
