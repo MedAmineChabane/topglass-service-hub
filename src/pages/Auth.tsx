@@ -116,7 +116,7 @@ const Auth = () => {
           <img 
             src={topglassLogo} 
             alt="Topglass" 
-            className="h-16 mx-auto mb-4"
+            className="h-16 w-16 mx-auto mb-4 rounded-full object-cover"
           />
           <div className="flex items-center justify-center gap-2 text-white/80">
             <Shield className="h-5 w-5 text-primary" />
