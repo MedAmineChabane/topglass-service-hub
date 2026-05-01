@@ -1,4 +1,5 @@
 import { Resend } from "https://esm.sh/resend@4.0.0";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -30,30 +31,58 @@ Deno.serve(async (req) => {
 
   try {
     const data: LeadNotificationRequest = await req.json();
-    console.log("Received lead notification request:", data);
+    const { leadId } = data;
+    console.log("Received lead notification request for lead:", leadId);
 
-    const {
-      leadId,
-      name,
-      email,
-      phone,
-      vehicleBrand,
-      vehicleModel,
-      vehicleType,
-      registrationPlate,
-      location,
-      serviceType,
-      description,
-    } = data;
-
-    // Validate required fields
-    if (!leadId || !name || !email || !phone) {
-      console.error("Missing required fields");
+    if (!leadId || typeof leadId !== "string") {
       return new Response(
-        JSON.stringify({ error: "Missing required fields" }),
+        JSON.stringify({ error: "Missing leadId" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
+
+    // Verify the lead actually exists and was created very recently.
+    // This blocks attackers from invoking this endpoint directly with arbitrary content.
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+    const { data: lead, error: leadError } = await supabase
+      .from("leads")
+      .select(
+        "id, name, email, phone, vehicle_brand, vehicle_type, registration_plate, location, glass_type, notes, created_at"
+      )
+      .eq("id", leadId)
+      .maybeSingle();
+
+    if (leadError || !lead) {
+      console.warn("Lead not found or lookup failed for id:", leadId);
+      return new Response(
+        JSON.stringify({ error: "Not found" }),
+        { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    const ageMs = Date.now() - new Date(lead.created_at).getTime();
+    if (ageMs > 5 * 60 * 1000) {
+      console.warn("Lead too old to notify:", leadId, "age(ms):", ageMs);
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Use trusted DB values (not the request body) to build the email.
+    const name = lead.name;
+    const email = lead.email;
+    const phone = lead.phone;
+    const vehicleBrand = lead.vehicle_brand;
+    const vehicleModel = data.vehicleModel ?? "";
+    const vehicleType = lead.vehicle_type;
+    const registrationPlate = lead.registration_plate ?? "";
+    const location = lead.location;
+    const serviceType = lead.glass_type;
+    const description = lead.notes ?? data.description ?? "";
 
     const serviceLabel = serviceType === "vitrage" ? "Vitrage / Pare-brise" : "Carrosserie";
     const adminUrl = `https://topglassfrancecom.lovable.app/admin`;
