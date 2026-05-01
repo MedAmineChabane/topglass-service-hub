@@ -444,20 +444,20 @@ const Devis = () => {
       console.error('Lead submission failed:', error);
 
       const err = error as any;
-      const message =
-        typeof err?.message === "string"
-          ? err.message
-          : typeof err?.error_description === "string"
-            ? err.error_description
-            : "Une erreur est survenue. Veuillez réessayer.";
-      const details = typeof err?.details === "string" ? err.details : undefined;
-      const code = typeof err?.code === "string" ? err.code : undefined;
+      // Map common error categories to safe, user-friendly messages.
+      // Never surface raw DB error codes, constraint names, or details to users.
+      let userMsg = "Une erreur est survenue. Veuillez réessayer.";
+      if (err?.code === "23514") {
+        userMsg = "Certaines données saisies sont invalides. Merci de vérifier vos informations.";
+      } else if (err?.code === "23505") {
+        userMsg = "Cette demande semble déjà avoir été enregistrée.";
+      } else if (err?.code === "429" || err?.status === 429) {
+        userMsg = "Trop de demandes. Veuillez réessayer dans quelques minutes.";
+      }
 
       toast({
         title: "Erreur",
-        description: [message, code ? `Code: ${code}` : null, details ? `Détails: ${details}` : null]
-          .filter(Boolean)
-          .join(" — "),
+        description: userMsg,
         variant: "destructive",
       });
     } finally {
